@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import tqdm
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import mapperMes, mapperMesTitle, mapperMesNumber
+import zipfile
 
 class LinkSicro:
     def __init__(self, link, ano, mes, mesTitle):
@@ -65,6 +66,25 @@ def download(url: str, filename: str):
                     pb.update(len(chunk))
                     f.write(chunk)
 
+def extrair_arquivo_zip(caminho_arquivo_zip, diretorio_destino):
+    nome_pasta = os.path.splitext(os.path.basename(caminho_arquivo_zip))[0]
+    caminho_pasta = os.path.join(diretorio_destino, nome_pasta)
+    os.makedirs(caminho_pasta, exist_ok=True)
+
+    with zipfile.ZipFile(caminho_arquivo_zip, 'r') as zip_ref:
+        zip_ref.extractall(caminho_pasta)
+
+    for root, dirs, files in os.walk(caminho_pasta):
+        for file in files:
+            arquivo_origem = os.path.join(root, file)
+            arquivo_destino = os.path.join(caminho_pasta, file)
+            os.replace(arquivo_origem, arquivo_destino)
+
+    for root, dirs, files in os.walk(caminho_pasta, topdown=False):
+        for nome_pasta in dirs:
+            os.rmdir(os.path.join(root, nome_pasta))
+
+    os.remove(caminho_arquivo_zip)
 
 diretorio_destino = "/home/lucian/Documentos/obras-cost-audit/SICRO"
 
@@ -84,5 +104,6 @@ for link_sicro in links_sicro:
                 caminho_arquivo = os.path.join(diretorio_destino, nome_arquivo)
 
                 download(url_arquivo, caminho_arquivo)
+                extrair_arquivo_zip(caminho_arquivo, diretorio_destino)
         else:
             print(f"Não foi possível acessar o link: {link_sicro.link}")
