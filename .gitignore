@@ -1,14 +1,13 @@
 __pycache__/
 *.pyc
 
-venv/
-env/
-
 *.log
 *.csv
 *.sqlite
 
-.env
+prod.env
+staging.env
+parsed-env
 
 .vscode/
 .idea/
@@ -25,4 +24,4 @@ dist/
 .DS_Store
 Thumbs.db
 
-./SICRO
+SICRO/
