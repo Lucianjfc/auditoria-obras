@@ -1,0 +1,63 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalDecorators": true
+    }
+  },
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "fragment": "Fragment",
+      "version": "detect",
+      "flowVersion": "0.53"
+    },
+    "linkComponents": ["Hyperlink", { "name": "Link", "linkAttribute": "to" }],
+    "import/resolver": {
+      "babel-plugin-root-import": {
+        "rootPathPrefix": "~",
+        "rootPathSuffix": "./src/"
+      }
+    }
+  },
+  "extends": ["plugin:prettier/recommended", "plugin:react/recommended"],
+  "plugins": ["prettier", "unused-imports"],
+  "rules": {
+    "react/jsx-uses-vars": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/prop-types": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/display-name": [0],
+    "react/jsx-key": [0],
+    "no-debugger": 1,
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": ["error", { "vars": "all", "args": "after-used" }],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "primereact/button",
+            "importNames": ["Button"],
+            "message": "Por favor, use o componente FcButton do submódulo frontend-components"
+          },
+          {
+            "name": "primereact/tooltip",
+            "importNames": ["Tooltip"],
+            "message": "Por favor, use o componente Tooltip do submódulo frontend-components"
+          }
+        ]
+      }
+    ]
+  }
+}

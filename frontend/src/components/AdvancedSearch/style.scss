@@ -1,0 +1,101 @@
+.advanced-search {
+  width: 100% !important;
+}
+
+#advanced-search-wrapped {
+  margin-bottom: 10px !important;
+  .controls-wrapper {
+    display: flex;
+    width: 100%;
+  }
+  .filter-button {
+    margin-right: 10px;
+    float: left;
+  }
+  .p-inputtext,
+  .basic-search {
+    width: 100%;
+  }
+  .p-autocomplete {
+    width: 100%;
+  }
+  #add-filter-btn {
+    background-color: #7ba0b3;
+  }
+}
+
+#filter-add.card {
+  margin-top: 10px;
+  border: 1px solid rgb(233, 236, 239) !important;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+  height: 130px;
+}
+
+#filter-add.hide {
+  opacity: 0;
+  display: none;
+  pointer-events: none;
+  height: 0px;
+}
+
+.selected-filters {
+  overflow: hidden;
+}
+
+.p-sidebar .p-sidebar-header {
+  display: none;
+}
+
+#campo .p-highlight,
+#selected-filters .p-highlight,
+#suggestions .p-highlight {
+  background: #3f51b5 !important;
+  color: white;
+  .p-button-icon-right {
+    color: white;
+  }
+}
+
+#suggestions {
+  overflow: hidden;
+}
+
+.value-content * {
+  width: 100%;
+}
+
+.value-content {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.btn-filter-text {
+  max-width: calc(100% - 2.75rem);
+}
+
+.suggestion-button {
+  border: 1px solid RGB(220, 220, 220) !important;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+#suggestions {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+#suggestions::-webkit-scrollbar {
+  width: 8px;
+  height: 2px;
+  background: transparent;
+}
+
+#suggestions::-webkit-scrollbar-thumb {
+  opacity: 0.3;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.p-confirm-dialog-message {
+  margin-left: 0% !important;
+}

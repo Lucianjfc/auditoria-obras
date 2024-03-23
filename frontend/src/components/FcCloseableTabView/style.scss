@@ -1,0 +1,95 @@
+.tabs {
+  display: flex;
+  position: relative;
+  align-items: baseline;
+}
+
+.tab-list-container {
+  overflow-x: auto;
+  max-width: 100%;
+  display: flex;
+  align-items: baseline;
+  overflow: auto;
+}
+
+.tab-list-container::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+.tab-list {
+  display: flex;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* hide scrollbar in Firefox */
+  -ms-overflow-style: none; /* hide scrollbar in IE and Edge */
+  position: relative;
+}
+
+.tab {
+  white-space: nowrap;
+  padding: 12px 24px;
+  scroll-snap-align: start;
+  font-size: large;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+}
+
+.tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 1.9rem;
+}
+
+.tab-icon-lock {
+  font-size: 1.2rem;
+  margin-left: 1rem;
+}
+
+.tab-icon-times {
+  font-size: 1.2rem;
+  margin-left: 1rem;
+  color: #d32f2f;
+}
+
+.tab:hover {
+  background: rgb(248, 248, 250);
+  border-color: transparent;
+  color: #333333;
+}
+
+.tab-fixed {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: #fff;
+}
+
+.tab.isActive {
+  background-color: rgb(238, 241, 250);
+  border-color: transparent;
+  color: #3f51b5;
+  border-bottom: 2px solid #3f51b5;
+}
+
+.tab-content {
+  padding: 10px 0px 0px 0px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.arrow-icon {
+  cursor: pointer;
+  padding: 1rem;
+  background: #fff;
+  color: #2196f3;
+  border-radius: 0;
+}
+
+.badge-change {
+  padding-right: 0.5rem;
+}

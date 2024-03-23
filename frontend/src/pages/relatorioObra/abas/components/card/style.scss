@@ -1,0 +1,74 @@
+.dashboard-container-obra {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.card-obra {
+  height: min-content;
+  width: 30%;
+  max-width: 300px;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+  border: solid 2px #e4e4e7;
+  background-color: #ffffff;
+}
+
+.card-content-obra {
+  text-align: center;
+}
+
+.card-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title-obra {
+  display: flex;
+  font-size: 0.7vw;
+  font-weight: bold;
+  color: #27272a;
+}
+
+.card-value-obra {
+  font-size: 1.2vw;
+  display: flex;
+  font-weight: bold;
+  color: #27272a;
+}
+
+.card-difference-obra {
+  font-size: 1.5vw;
+  margin-top: 10px;
+}
+
+.icon-rounded-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.icon-rounded {
+  font-size: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
+  .card-obra {
+    width: 45%;
+    height: 45%;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-obra {
+    width: 100%;
+    height: 45%;
+  }
+}

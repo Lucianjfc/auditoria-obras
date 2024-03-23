@@ -1,0 +1,82 @@
+app: # App
+  name: LICON-DEV
+  pagination:
+    limit:
+      default: ${PAGINATION_LIMIT_DEFAULT:20}
+      max: ${PAGINATION_LIMIT_MAX:100}
+  files:
+    repository-full-path: /home/lucian/Documentos/lsi/tce
+    temp-folder-path: arquivos_uploads_temp
+    definitive-folder-path: arquivos_uploads
+    relatorio-obra-folder-path: relatorio-obra
+  group:
+    admin:
+      label: "ADMINISTRADOR"
+  permissao:
+    admin:
+      label: "ADMIN"
+server:
+  port: 8080
+  servlet:
+    context-path: /licon-api
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    url: /licon-api/v3/api-docs.yaml
+spring:
+  servlet:
+    multipart:
+      max-request-size: 210MB
+      max-file-size: 100MB
+      enabled: true
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=master
+    username: sa
+    password: Admin@1234
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  rabbitmq:
+    password: "123456"
+    port: "5672"
+    host: localhost
+    username: admin
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 3s
+          max-attempts: 3
+          multiplier: 2
+    queue:
+      name: mq.email.dev
+    exchange:
+      name: mq.exchange.dev.email
+    routeKey: mq.route.dev.email
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+    default-property-inclusion: NON_NULL
+    serialization:
+      write-dates-as-timestamps: false
+  elasticsearch:
+    host: localhost:9200
+    user: elastic
+    password: elastic
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      org:
+        hibernate:
+          envers:
+            default_schema: AUDITORIA
+            revision_field_name: ID_AUDT
+      hibernate:
+        dialect: org.hibernate.spatial.dialect.sqlserver.SqlServer2008SpatialDialect
+        format_sql: true
+        show_sql: false
+        use_sql_comments: true
+        default_schema: dbo
+        listeners:
+          envers:
+            autoRegister: true

@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src/",
+    "paths": {
+      "~/*": ["*"],
+      "fc/*": ["frontend-components/*"]
+    },
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules/"]
+}

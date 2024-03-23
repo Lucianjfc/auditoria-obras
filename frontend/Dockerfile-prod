@@ -1,0 +1,45 @@
+ARG REACT_APP_API_URL=http://localhost:8080/licon-api/
+ARG COMMIT_HASH
+ARG BUILD_DATE
+
+FROM node:14.17.0-alpine as build
+ARG REACT_APP_API_URL
+ARG COMMIT_HASH
+ARG BUILD_DATE
+
+WORKDIR /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY ./package*.json ./
+
+RUN npm install --silent
+
+COPY . ./
+
+RUN npm run build
+
+FROM nginx:1.21.3-alpine
+ARG REACT_APP_API_URL
+ARG COMMIT_HASH
+ARG BUILD_DATE
+
+ENV REACT_APP_API_URL=${REACT_APP_API_URL}
+ENV COMMIT_HASH=${COMMIT_HASH}
+ENV BUILD_DATE=${BUILD_DATE}
+
+EXPOSE 80
+
+COPY --from=build /app/build/ /var/www/html/licon
+
+COPY ./nginx/default.conf /etc/nginx/conf.d
+
+WORKDIR /var/www/html/licon
+COPY ./env.sh .
+COPY .env .
+
+RUN apk add --no-cache bash
+
+RUN chmod +x env.sh
+
+CMD [ "/bin/bash", "-c", "/var/www/html/licon/env.sh && nginx -g \"daemon off;\"" ]

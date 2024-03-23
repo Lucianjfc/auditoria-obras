@@ -1,0 +1,94 @@
+body {
+  counter-reset: section list-1 list-2 list-3 list-4;
+}
+
+fieldset {
+  counter-increment: section;
+  counter-reset: list-1;
+}
+
+.sections-grid {
+  height: 100%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.sections-grid .tab-holder {
+  flex: 1;
+  padding-bottom: 0;
+}
+
+.sections-grid .tab-holder .p-tabview {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.sections-grid .tab-holder .p-tabview {
+  flex: 1;
+}
+
+.sections-grid .tab-holder .p-tabview-panel {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.sections-grid .tab-holder .p-tabview-panels {
+  height: 100%;
+  padding-bottom: 0;
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.tipo-item-badge {
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.tipo-item-badge.materiais {
+  background-color: #c8e6c9;
+  color: #256029;
+}
+
+.tipo-item-badge.servicos {
+  background-color: #ffcdd2;
+  color: #c63737;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.materiais-table .p-datatable-thead {
+  display: none;
+}
+
+.carrinho .p-sidebar-header {
+  display: flex;
+}
+
+#cart-button-badge > .p-button-icon {
+  border-radius: 50% !important;
+  border: 1px solid !important;
+  padding: 9px !important;
+  width: 33px !important;
+  height: 33px !important;
+}
+
+.badge-qtd-itens {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  transform: translateX(-25%);
+  width: 16px;
+  border-radius: 50%;
+  font-size: 10px;
+  height: 16px;
+  z-index: 100;
+}
