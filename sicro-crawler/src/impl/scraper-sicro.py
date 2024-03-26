@@ -47,6 +47,7 @@ for link in links_extraidos:
     link_sicro = LinkSicro(link, ano, mes, mesTitle)
     links_sicro.append(link_sicro)
 
+
 def download(url: str, filename: str):
     with open(filename, 'wb') as f:
         with requests.get(url, stream=True) as r:
@@ -86,7 +87,7 @@ def extrair_arquivo_zip(caminho_arquivo_zip, diretorio_destino):
 
     os.remove(caminho_arquivo_zip)
 
-diretorio_destino = "/home/lucian/Documentos/obras-cost-audit/SICRO"
+diretorio_destino = "/home/lucian/Documentos/obras-cost-audit/sicro-crawler/SICRO"
 
 for link_sicro in links_sicro:
     if (int(link_sicro.ano) >= 2023):
