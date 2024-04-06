@@ -428,7 +428,7 @@ class CatalogoObra extends GenericIndexPage {
     }
     let content = <></>;
     content = (
-      <div className="p-col-12 relative">
+      <div className="p-col-12 relative w-full">
         <div className="absolute" style={{ top: 0, right: 0, zIndex: 10 }}>
           <div className="relative">
             <span className="absolute badge-qtd-itens" style={{ backgroundColor: '#FF3D32', color: '#f1f5f9' }}>

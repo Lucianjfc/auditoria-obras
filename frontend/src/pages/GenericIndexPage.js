@@ -12,7 +12,7 @@ import { getDescendantProp } from '../utils/utils';
 class GenericIndexPage extends React.Component {
   store;
 
-  constructor(props, accessPermission = undefined) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -20,7 +20,6 @@ class GenericIndexPage extends React.Component {
       columnsToExport: [],
     };
 
-    this.accessPermission = accessPermission;
     this.filterColumnsToExport = this.filterColumnsToExport.bind(this);
     this.setColumnsToExport = this.setColumnsToExport.bind(this);
     this.onPage = this.onPage.bind(this);
@@ -35,20 +34,10 @@ class GenericIndexPage extends React.Component {
     this.openDialog = this.openDialog.bind(this);
     this.closeDialog = this.closeDialog.bind(this);
     this.renderColumns = this.renderColumns.bind(this);
-    this.getReadPermission = this.getReadPermission.bind(this);
-    this.getWritePermission = this.getWritePermission.bind(this);
   }
 
   setColumnsToExport(columnsToExport) {
     this.setState({ columnsToExport });
-  }
-
-  getReadPermission() {
-    return this.accessPermission && [this.accessPermission.readPermission, this.accessPermission.writePermission];
-  }
-
-  getWritePermission() {
-    return this.accessPermission && [this.accessPermission.writePermission];
   }
 
   renderColumns(columns) {

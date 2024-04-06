@@ -170,7 +170,6 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
 
     return (
       <div>
-        <AppBreadCrumb items={breacrumbItems} />
         <div className="card page index-table">
           <div className="flex flex-column w-full">
             <div className="w-full flex">
@@ -180,6 +179,7 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
                   color: '#333',
                   fontWeight: 'bold',
                   letterSpacing: '2px',
+                  marginLeft: '1rem',
                 }}
               >
                 Relatórios
@@ -187,6 +187,7 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
             </div>
           </div>
 
+          <AppBreadCrumb items={breacrumbItems} />
           <AdvancedSearch
             searchParams={this.store.getAdvancedSearchParams()}
             store={this.store}

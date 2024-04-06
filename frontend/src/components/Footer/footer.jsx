@@ -3,10 +3,10 @@ import React from 'react';
 
 export const Footer = () => (
   <footer
-    className="flex align-items-center justify-content-center w-full h-full p-3 mt-auto"
-    style={{ backgroundColor: '#3f51b5', color: ' #fafafa' }}
+    className="flex align-items-center justify-content-center w-full p-3 mt-auto border-round h-8rem"
+    style={{ backgroundColor: '#3f51b5', color: ' #fafafa', height: '5vh' }}
   >
-    <div className="grid gap-4">
+    <div className="grid gap-4 align-items-center justify-content-center">
       <div className="flex flex-column gap-4 col">
         <div className="flex align-items-center gap-2">
           <div className="flex flex-column gap-0">

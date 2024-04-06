@@ -69,33 +69,28 @@ class RelatorioObraFormPage extends GenericFormPage {
 
   renderActionButtons() {
     return (
-      <div className="p-mt-10 form-actions">
-        <div className="p-mt-2">
-          <span className="p-mr-1 p-d-inline p-d-flex align-items-center">
-            <FcButton
-              label="Voltar"
-              type="button"
-              className="p-ml-auto p-button-secondary p-mr-2"
-              onClick={() => {
-                this.state.activeIndex === 0 && this._goBack();
-                this.state.activeIndex !== 0 &&
-                  this.setState((prevState) => ({ activeIndex: prevState.activeIndex - 1 }));
-              }}
-              loading={this.store.loading}
-            />
-            {this.state.activeIndex != 2 && (
-              <FcButton
-                label="Avançar"
-                type="button"
-                onClick={() => {
-                  this.handleOnChangeStep(this.state.activeIndex + 1);
-                }}
-              />
-            )}
-            {this.state.activeIndex == 2 && <FcButton label="Salvar" type="submit" loading={this.store.loading} />}
-          </span>
-        </div>
-      </div>
+      <span className="fixed-bottom p-mr-1 p-d-inline p-d-flex align-items-center">
+        <FcButton
+          label="Voltar"
+          type="button"
+          className="p-ml-auto p-button-secondary p-mr-2"
+          onClick={() => {
+            this.state.activeIndex === 0 && this._goBack();
+            this.state.activeIndex !== 0 && this.setState((prevState) => ({ activeIndex: prevState.activeIndex - 1 }));
+          }}
+          loading={this.store.loading}
+        />
+        {this.state.activeIndex != 2 && (
+          <FcButton
+            label="Avançar"
+            type="button"
+            onClick={() => {
+              this.handleOnChangeStep(this.state.activeIndex + 1);
+            }}
+          />
+        )}
+        {this.state.activeIndex == 2 && <FcButton label="Salvar" type="submit" loading={this.store.loading} />}
+      </span>
     );
   }
 

@@ -2,15 +2,18 @@
 @import './AppDemo.scss';
 @import './AppCustom.scss';
 
+body {
+  max-height: '100vh';
+  overflow-y: hidden;
+  margin: 5px;
+  font-family: 'poppins';
+}
+
 // correção de ausência de quebra de linha em datatable responsive/resizable
 .p-datatable-resizable .p-datatable-thead > tr > th,
 .p-datatable-resizable .p-datatable-tfoot > tr > td,
 .p-datatable-resizable .p-datatable-tbody > tr > td {
   white-space: inherit !important;
-}
-
-body {
-  font-family: 'poppins';
 }
 
 .p-tooltip {
@@ -23,68 +26,6 @@ body {
 .p-overlaypanel-content {
   .p-datatable-table {
     width: 100%;
-  }
-}
-
-.notifications_table {
-  box-shadow: rgba(100, 100, 100, 0.35) 0px 3px 9px;
-  max-height: 40vh;
-}
-
-.notifications_button {
-  font-size: 1.5rem;
-  color: white !important;
-  .p-button-label {
-    display: none !important;
-  }
-}
-
-.notification {
-  font-size: 0.858rem;
-  box-shadow: rgba(100, 100, 100, 0.35) 0px 3px 9px;
-
-  .title {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    font-weight: bold;
-  }
-
-  .subtitle {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .content {
-    margin-left: 0;
-    padding-left: 0;
-    > * {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-  }
-
-  .content p {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  .content ol {
-    margin-top: 2px;
-    margin-bottom: 2px;
-  }
-
-  span,
-  div {
-    padding: 2px 5px 0 5px;
-  }
-
-  &:hover {
-    background-color: rgba(200, 200, 200, 0.4);
   }
 }
 
@@ -107,47 +48,7 @@ body {
   font-size: medium;
 }
 
-.rightbar-wrapper {
-  transform: translate3d(25rem, 0px, 0px);
-  transition: right 0.2s;
-  background: white;
-  height: calc(100vh - 4rem);
-  top: 4rem;
-  display: none;
-  right: 0;
-  position: fixed;
-  overflow-y: scroll;
-}
-
 .layout-main {
   transition: margin-right 0.5s;
   overflow-x: hidden;
-}
-
-.layout-rightbar-collapsed {
-  .rightbar-wrapper {
-    transform: translate3d(0px, 0px, 0px);
-    width: 0% !important;
-    display: block;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
-
-  .layout-main {
-    margin-right: 0% !important;
-  }
-}
-
-.layout-rightbar-active {
-  .rightbar-wrapper {
-    transition: width 0.2s ease;
-    transform: translate3d(0px, 0px, 0px);
-    width: 25rem;
-    display: block;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  }
-
-  .layout-main {
-    transition: all 0.2s ease;
-    margin-right: 25rem;
-  }
 }

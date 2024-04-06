@@ -221,15 +221,11 @@ class RelatorioObraIndexPage extends GenericIndexPage {
         body: (row) => (
           <FcButton
             className="p-button-outlined p-button-rounded"
-            label="Adicionar"
+            label="Visualizar"
             type="button"
             onClick={() => {
               this.switchVisibility();
               this.setState({ selectedItem: row });
-              const mesColeta =
-                row?.caracteristicasDesonerado[row?.caracteristicasDesonerado.length - 1]?.mesColeta ??
-                row?.caracteristicasNaoDesonerado[row?.caracteristicasNaoDesonerado.length - 1]?.mesColeta;
-              this.storeRelatorio.setItemObra('new', row, 'sicro', mesColeta);
             }}
           />
         ),
@@ -269,6 +265,7 @@ class RelatorioObraIndexPage extends GenericIndexPage {
         header: 'SICRO',
         content: (
           <DataTable
+            header={header}
             rowHover
             responsiveLayout="scroll"
             tabIndex={'key'}
@@ -383,22 +380,7 @@ class RelatorioObraIndexPage extends GenericIndexPage {
 
   render() {
     return (
-      <div className="card page index-table">
-        <div className="flex flex-column w-full">
-          <div className="w-full flex">
-            <h1
-              style={{
-                fontFamily: 'poppins',
-                fontSize: '36px',
-                color: '#333',
-                fontWeight: 'bold',
-                letterSpacing: '2px',
-              }}
-            >
-              Banco de Preços de Obras
-            </h1>
-          </div>
-        </div>
+      <div className="h-full">
         <AdvancedSearch
           searchParams={this.store.getAdvancedSearchParams()}
           store={this.store}
