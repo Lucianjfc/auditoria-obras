@@ -7,8 +7,7 @@ import CardsPrecos from './components/card/card';
 import { Divider } from 'primereact/divider';
 import ItensObraListagem from './components/itens/itens';
 import { DATE_FORMAT_REPORT } from '~/utils/date';
-import FcButton from '~/components/FcButton';
-import { PrimeIcons } from 'primereact/api';
+
 import moment from 'moment';
 import html2canvas from 'html2canvas';
 
@@ -59,7 +58,7 @@ class FormResumo extends React.Component {
   render() {
     return (
       <div className="p-fluid p-grid">
-        <div className="flex justify-content-end p-col-12">
+        {/* <div className="flex justify-content-end p-col-12">
           <FcButton
             className="p-button-raised p-button-danger w-1"
             style={{ marginBottom: '5px' }}
@@ -68,7 +67,7 @@ class FormResumo extends React.Component {
             type="button"
             onClick={() => this.exportPdf()}
           />
-        </div>
+        </div> */}
         <div className="p-col-12">
           <CardsPrecos itens={this.store.itensObra} licitacao={this.store.object.licitacao} />
         </div>

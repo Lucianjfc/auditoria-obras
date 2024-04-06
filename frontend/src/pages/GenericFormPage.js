@@ -22,8 +22,6 @@ class GenericFormPage extends React.Component {
     this.submitFormData = this.submitFormData.bind(this);
     this.validateField = this.validateField.bind(this);
     this.getFieldErrorMessage = this.getFieldErrorMessage.bind(this);
-    this.getReadPermission = this.getReadPermission.bind(this);
-    this.getWritePermission = this.getWritePermission.bind(this);
   }
 
   componentDidMount() {

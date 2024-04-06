@@ -102,7 +102,7 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
               store={this.store.fileStore}
               tableColumns={columnsArquivo}
               onChangeFiles={(files) => this.store.setArquivos(files)}
-              fileTypes={DadosEstaticosService.getTipoArquivoTermoReferencia()}
+              fileTypes={DadosEstaticosService.getTipoArquivoRelatorioObra()}
               accept=".xlsx"
             />
           </div>

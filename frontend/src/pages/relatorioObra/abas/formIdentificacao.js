@@ -111,7 +111,7 @@ class FormIdentificacao extends React.Component {
           <Fieldset legend="Identificação" className="w-full">
             <div className="p-fluid p-formgrid p-grid" style={{ alignItems: 'center' }}>
               <FormField
-                columns={6}
+                columns={2}
                 attribute="titulo"
                 label="Título do Relatório"
                 rule={getRule('titulo')}

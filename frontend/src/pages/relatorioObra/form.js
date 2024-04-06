@@ -8,7 +8,6 @@ import RelatorioObraFormStore from '~/stores/relatorioObra/formStore';
 import { Steps } from 'primereact/steps';
 import FormIdentificacao from './abas/formIdentificacao';
 import FcButton from '~/components/FcButton';
-import AppStore from '~/stores/AppStore';
 import FormResumo from './abas/formResumo';
 import FormItens from './abas/formItens';
 import { showNotification } from '~/utils/utils';
@@ -69,7 +68,6 @@ class RelatorioObraFormPage extends GenericFormPage {
   }
 
   renderActionButtons() {
-    const hasWritePermission = !this.getWritePermission() || AppStore.hasPermission(this.getWritePermission());
     return (
       <div className="p-mt-10 form-actions">
         <div className="p-mt-2">
@@ -85,7 +83,7 @@ class RelatorioObraFormPage extends GenericFormPage {
               }}
               loading={this.store.loading}
             />
-            {this.state.activeIndex != 2 && hasWritePermission && (
+            {this.state.activeIndex != 2 && (
               <FcButton
                 label="Avançar"
                 type="button"
@@ -94,9 +92,7 @@ class RelatorioObraFormPage extends GenericFormPage {
                 }}
               />
             )}
-            {this.state.activeIndex == 2 && hasWritePermission && (
-              <FcButton label="Salvar" type="submit" loading={this.store.loading} />
-            )}
+            {this.state.activeIndex == 2 && <FcButton label="Salvar" type="submit" loading={this.store.loading} />}
           </span>
         </div>
       </div>

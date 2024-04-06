@@ -31,22 +31,17 @@ public class RelatorioObraController extends AbstractController<RelatorioObra, R
     @Autowired
     private RelatorioObraService service;
 
-    @Value("${spring.profiles.active}")
-    private String profile;
-
     @Override
     protected RelatorioObraService getService() {
         return service;
     }
 
-    @PreAuthorize("hasAnyAuthority(@userPermissionService.getWritePermission(#this.this.class.name))")
     @PostMapping("/upload")
     public ResponseEntity<ArquivoDTO> upload(@RequestParam("file") MultipartFile file) throws AppException {
         ArquivoDTO response = service.upload(file);
         return ResponseEntity.ok(response);
     }
 
-    @PreAuthorize("hasAnyAuthority(@userPermissionService.getReadPermission(#this.this.class.name))")
     @GetMapping("/download")
     public ResponseEntity<Resource> download(@Valid ArquivoDTO arquivoDTO) throws AppException {
         ArquivoBinarioDTO arquivoBinarioDTO = service.download(arquivoDTO);
@@ -60,21 +55,18 @@ public class RelatorioObraController extends AbstractController<RelatorioObra, R
         return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType(arquivoBinarioDTO.getTipoArquivo())).body(resource);
     }
 
-    @PreAuthorize("hasAnyAuthority(@userPermissionService.getWritePermission(#this.this.class.name))")
     @DeleteMapping("/{idRelatorioObra:[0-9]+}/arquivos/{idArquivo:[0-9]+}")
     public ResponseEntity<Void> removerArquivo(@PathVariable("idRelatorioObra") Long idRelatorioObra, @PathVariable("idArquivo") Long idArquivo) throws AppException {
         service.removerArquivo(idRelatorioObra, idArquivo);
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasAnyAuthority(@userPermissionService.getReadPermission(#this.this.class.name))")
     @GetMapping("/{idRelatorioObra:[0-9]+}/arquivos")
     public ResponseEntity<List<ArquivoRelatorioObraDTO>> recuperarArquivos(@PathVariable("idRelatorioObra") Long idRelatorioObra) throws AppException {
         List<ArquivoRelatorioObraDTO> resultado = service.recuperarArquivos(idRelatorioObra);
         return ResponseEntity.ok(resultado);
     }
 
-    @PreAuthorize("hasAnyAuthority(@userPermissionService.getWritePermission(#this.this.class.name))")
     @PutMapping("/{idRelatorioObra:[0-9]+}/arquivos/{idArquivo:[0-9]+}")
     public ResponseEntity<ArquivoRelatorioObraDTO> atualizarArquivo(@PathVariable("idRelatorioObra") Long idRelatorioObra, @PathVariable("idArquivo") Long idArquivo, @RequestBody @Valid ArquivoRelatorioObraDTO arquivoRelatorioObraDTO) throws AppException {
         arquivoRelatorioObraDTO.setIdArquivo(idArquivo);
@@ -82,7 +74,6 @@ public class RelatorioObraController extends AbstractController<RelatorioObra, R
         return ResponseEntity.ok(resultado);
     }
 
-    @PreAuthorize("hasAnyAuthority(@userPermissionService.getReadPermission(#this.this.class.name))")
     @PostMapping("/importar-relatorio")
     public ResponseEntity<Void> validacaoArquivos(@Valid @RequestBody RelatorioObraDTO dto) throws AppException {
         service.importarRelatorio(dto.getRelatorioObra(), dto.getArquivos());
