@@ -7,7 +7,6 @@ import zipfile
 from datetime import datetime
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-
 class LinkInvalidoError(Exception):
     def __init__(self, message="O link fornecido é inválido."):
         self.message = message
@@ -108,6 +107,17 @@ for i in range(2023, ano_atual + 1):
 
 diretorio_destino = "/home/lucian/Documentos/obras-cost-audit/sinapi-crawler/SINAPI"
 
+def renomear_arquivos_com_extensoes_minusculas(diretorio):
+    print('diretorio:', diretorio)
+    for raiz, subdiretorios, arquivos in os.walk(diretorio):
+        for arquivo in arquivos:
+            nome_arquivo, extensao = os.path.splitext(arquivo)
+            if extensao.lower() != extensao:
+                novo_nome = nome_arquivo + extensao.lower()
+                caminho_atual = os.path.join(raiz, arquivo)
+                novo_caminho = os.path.join(raiz, novo_nome)
+                os.rename(caminho_atual, novo_caminho)
+
 for link in links:
     nome_arquivo = f"{link.ano}{link.mes}.zip"
     caminho_arquivo = os.path.join(diretorio_destino, nome_arquivo)
@@ -115,6 +125,7 @@ for link in links:
     try:
         download(link.link, caminho_arquivo)
         extrair_arquivo_zip(caminho_arquivo, diretorio_destino, link.desonerado)
+        renomear_arquivos_com_extensoes_minusculas(diretorio_destino)
     except (LinkInvalidoError) as e:
         print(e.message)
 

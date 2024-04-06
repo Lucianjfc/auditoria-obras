@@ -10,4 +10,6 @@ python-dotenv==1.0.0
 retrying
 bs4
 tqdm
-zipfile
+Elasticsearch
+xlrd
+xlrd==1.0.0

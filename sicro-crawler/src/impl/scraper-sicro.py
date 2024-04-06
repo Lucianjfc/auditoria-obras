@@ -8,6 +8,11 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils.utils import mapperMes, mapperMesTitle, mapperMesNumber
 import zipfile
 
+class LinkInvalidoError(Exception):
+    def __init__(self, message="O link fornecido é inválido."):
+        self.message = message
+        super().__init__(self.message)
+        
 class LinkSicro:
     def __init__(self, link, ano, mes, mesTitle):
         self.link = link
@@ -15,7 +20,7 @@ class LinkSicro:
         self.mes = mes
         self.mesTitle = mesTitle
 
-url = "https://www.gov.br/dnit/pt-br/assuntos/planejamento-e-pesquisa/custos-e-pagamentos/custos-e-pagamentos-dnit/sistemas-de-custos/sicro_antiga/norte/norte"
+url = "https://www.gov.br/dnit/pt-br/assuntos/planejamento-e-pesquisa/custos-e-pagamentos/custos-e-pagamentos-dnit/sistemas-de-custos/sicro_antiga/nordeste"
 
 headers = {
         'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"}
@@ -24,6 +29,7 @@ site = requests.get(url, headers=headers)
 soup = BeautifulSoup(site.content, 'html.parser')
 items = soup.find_all('div', id='parent-fieldname-text')
 
+
 links_extraidos = []
 
 if items:
@@ -31,10 +37,11 @@ if items:
         links = item.find_all('a', class_='internal-link')
         for link in links:
             link_href = link['href']
-            if 'acre' in link_href:
+            if 'paraiba' in link_href:
                 links_extraidos.append(link_href)
 else:
     print('Nenhum item encontrado.')
+
 
 links_sicro = [] 
 for link in links_extraidos:
@@ -49,23 +56,26 @@ for link in links_extraidos:
 
 
 def download(url: str, filename: str):
-    with open(filename, 'wb') as f:
-        with requests.get(url, stream=True) as r:
-            r.raise_for_status()
-            total = int(r.headers.get('content-length', 0))
+    try:
+        with open(filename, 'wb') as f:
+            with requests.get(url, stream=True) as r:
+                r.raise_for_status()
+                total = int(r.headers.get('content-length', 0))
 
-            tqdm_params = {
-                'desc': url,
-                'total': total,
-                'miniters': 1,
-                'unit': 'B',
-                'unit_scale': True,
-                'unit_divisor': 1024,
-            }
-            with tqdm.tqdm(**tqdm_params) as pb:
-                for chunk in r.iter_content(chunk_size=8192):
-                    pb.update(len(chunk))
-                    f.write(chunk)
+                tqdm_params = {
+                    'desc': url,
+                    'total': total,
+                    'miniters': 1,
+                    'unit': 'B',
+                    'unit_scale': True,
+                    'unit_divisor': 1024,
+                }
+                with tqdm.tqdm(**tqdm_params) as pb:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        pb.update(len(chunk))
+                        f.write(chunk)
+    except Exception:
+        raise LinkInvalidoError(f"O link '{url}' não é válido.")
 
 def extrair_arquivo_zip(caminho_arquivo_zip, diretorio_destino):
     nome_pasta = os.path.splitext(os.path.basename(caminho_arquivo_zip))[0]

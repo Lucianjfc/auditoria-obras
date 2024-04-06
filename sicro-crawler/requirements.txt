@@ -11,3 +11,5 @@ retrying
 bs4
 tqdm
 zipfile
+Elasticsearch
+xlrd==1.0.0
