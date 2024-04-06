@@ -43,6 +43,8 @@
     "leaflet-draw": "^1.0.4",
     "leaflet-draw-locales": "^1.2.1",
     "leaflet.awesome-markers": "^2.0.5",
+    "lucide": "^0.365.0",
+    "lucide-react": "^0.365.0",
     "mobx": "^6.3.2",
     "mobx-react": "^7.2.0",
     "mobx-react-devtools": "^6.1.1",

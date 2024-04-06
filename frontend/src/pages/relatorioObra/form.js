@@ -15,7 +15,7 @@ import { showNotification } from '~/utils/utils';
 @observer
 class RelatorioObraFormPage extends GenericFormPage {
   constructor(props) {
-    super(props, UrlRouter.auditoria.relatorioObra.index);
+    super(props, UrlRouter.auditoria.relatorioObra.listagem);
     this.store = new RelatorioObraFormStore();
     this.handleOnChangeStep = this.handleOnChangeStep.bind(this);
     this.state = {

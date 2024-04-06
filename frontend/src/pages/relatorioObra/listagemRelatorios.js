@@ -173,14 +173,13 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
         <AppBreadCrumb items={breacrumbItems} />
         <div className="card page index-table">
           <div className="flex flex-column w-full">
-            <div className="w-full flex justify-content-center">
+            <div className="w-full flex">
               <h1
                 style={{
                   fontSize: '36px',
                   color: '#333',
                   fontWeight: 'bold',
                   letterSpacing: '2px',
-                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
                 }}
               >
                 Relatórios

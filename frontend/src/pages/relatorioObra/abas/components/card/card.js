@@ -126,11 +126,13 @@ class CardsPrecos extends React.Component {
               >
                 <span className="flex align-items-center gap-2 w-full justify-content-between">
                   <span className="text-3xl">
-                    {`${getNumberFractionDigits(
-                      ((this.state.vTotalitensComprados - this.state.vTotalItensMercado) /
-                        this.state.vTotalItensMercado) *
-                        100
-                    )}%`}
+                    {vTotalItensMercado > 0
+                      ? `${getNumberFractionDigits(
+                          ((this.state.vTotalitensComprados - this.state.vTotalItensMercado) /
+                            this.state.vTotalItensMercado) *
+                            100
+                        )}%`
+                      : '0 %'}
                   </span>
                   <div
                     className="icon-rounded-wrapper"

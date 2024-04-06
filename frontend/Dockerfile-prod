@@ -1,4 +1,4 @@
-ARG REACT_APP_API_URL=http://localhost:8080/licon-api/
+ARG REACT_APP_API_URL=http://localhost:8080/obras-api
 ARG COMMIT_HASH
 ARG BUILD_DATE
 

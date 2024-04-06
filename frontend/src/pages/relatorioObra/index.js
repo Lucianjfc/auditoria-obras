@@ -383,33 +383,31 @@ class RelatorioObraIndexPage extends GenericIndexPage {
 
   render() {
     return (
-      <div>
-        <div className="card page index-table">
-          <div className="flex flex-column w-full">
-            <div className="w-full flex justify-content-center">
-              <h1
-                style={{
-                  fontSize: '36px',
-                  color: '#333',
-                  fontWeight: 'bold',
-                  letterSpacing: '2px',
-                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
-                }}
-              >
-                BANCO DE PREÇOS DE OBRAS
-              </h1>
-            </div>
+      <div className="card page index-table">
+        <div className="flex flex-column w-full">
+          <div className="w-full flex">
+            <h1
+              style={{
+                fontFamily: 'poppins',
+                fontSize: '36px',
+                color: '#333',
+                fontWeight: 'bold',
+                letterSpacing: '2px',
+              }}
+            >
+              Banco de Preços de Obras
+            </h1>
           </div>
-          <AdvancedSearch
-            searchParams={this.store.getAdvancedSearchParams()}
-            store={this.store}
-            searchFields={['query']}
-            className="w-full"
-            elasticsearch
-          />
-          {this.renderTabs()}
-          {this.renderDialog()}
         </div>
+        <AdvancedSearch
+          searchParams={this.store.getAdvancedSearchParams()}
+          store={this.store}
+          searchFields={['query']}
+          className="w-full"
+          elasticsearch
+        />
+        {this.renderTabs()}
+        {this.renderDialog()}
       </div>
     );
   }
