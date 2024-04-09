@@ -1,5 +1,5 @@
 app: # App
-  name: LICON-DEV
+  name: OBRAS-API
   pagination:
     limit:
       default: ${PAGINATION_LIMIT_DEFAULT:20}
@@ -18,11 +18,7 @@ app: # App
 server:
   port: 8080
   servlet:
-    context-path: /licon-api
-springdoc:
-  swagger-ui:
-    disable-swagger-default-url: true
-    url: /licon-api/v3/api-docs.yaml
+    context-path: /obras-api
 spring:
   servlet:
     multipart:

@@ -28,9 +28,6 @@ public class ObrigatoriedadeArquivoSpecification implements ISpecification<Obrig
 		addIfExists(getPredicate(root.get(ObrigatoriedadeArquivo_.OBRIGATORIO), filtro.getObrigatorio(), builder, filtro.getFilterType()), predicados);
 		addIfExists(getPredicate(root.get(ObrigatoriedadeArquivo_.EXIBIR_PORTAL), filtro.getExibirPortal(), builder, filtro.getFilterType()), predicados);
 		addIfExists(getPredicate(root.get(ObrigatoriedadeArquivo_.EXIBIR_PRIMEIRA_FASE), filtro.getExibirPrimeiraFase(), builder, filtro.getFilterType()), predicados);
-		addIfExists(getPredicate(root.get(ObrigatoriedadeArquivo_.MODALIDADES), filtro.getModalidades(), builder, filtro.getFilterType()), predicados);
-		addIfExists(getPredicate(root.get(ObrigatoriedadeArquivo_.FASES_OBRIGATORIAS), filtro.getFasesObrigatorias(), builder, filtro.getFilterType()), predicados);
-
 		return builder.and(predicados.toArray(new Predicate[0]));
 	}
 	

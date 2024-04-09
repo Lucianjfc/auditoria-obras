@@ -1,6 +1,5 @@
 package br.gov.ac.tce.licon.entities;
 
-import br.gov.ac.tce.licon.entities.enums.FaseLicitacao;
 import br.gov.ac.tce.licon.entities.enums.Objeto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -8,7 +7,6 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

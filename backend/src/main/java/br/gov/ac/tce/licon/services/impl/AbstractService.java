@@ -7,8 +7,6 @@ import br.gov.ac.tce.licon.dtos.requests.advancedSearch.AdvancedSearchRequest;
 import br.gov.ac.tce.licon.dtos.requests.advancedSearch.SearchOperator;
 import br.gov.ac.tce.licon.dtos.responses.BuscaResponse;
 import br.gov.ac.tce.licon.entities.AbstractIdentificavel;
-import br.gov.ac.tce.licon.entities.AbstractSituacaoIdentificavel;
-import br.gov.ac.tce.licon.entities.enums.StatusCatalogo;
 import br.gov.ac.tce.licon.exceptions.AppException;
 import br.gov.ac.tce.licon.repositories.IRepository;
 import br.gov.ac.tce.licon.services.IService;
@@ -79,9 +77,7 @@ public abstract class AbstractService<E extends AbstractIdentificavel, F extends
     }
 
     protected void validarRemover(E entidade) throws AppException {
-        if (isEntidadeCatalogo()) {
-            throw new AppException("A operação não pôde ser concluída, pois este registro é utilizado por outra entidade.", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+
     }
 
     public E save(E entity) throws AppException {
@@ -174,9 +170,6 @@ public abstract class AbstractService<E extends AbstractIdentificavel, F extends
     }
 
     public List<E> buscarAllAdvanced(AdvancedSearchRequest filtro) {
-        if (isEntidadeCatalogo()) {
-            setDefaultFilterParams(filtro);
-        }
         resolverRelacionamentosAdvancedSearch(filtro);
         Specification<E> spec = getSpecification(filtro);
         if (filtro.getSort() != null) {
@@ -188,10 +181,7 @@ public abstract class AbstractService<E extends AbstractIdentificavel, F extends
     }
 
     protected void setDefaultFilterParams(AdvancedSearchRequest filtro) {
-        if (AbstractSituacaoIdentificavel.class.isAssignableFrom(this.persistentClass)) {
-            AdvancedSearchParameter situacaoParam = new AdvancedSearchParameter("status", SearchOperator.EQUAL_TO, StatusCatalogo.A.name());
-            filtro.getAndParameters().add(situacaoParam);
-        }
+
     }
 
     protected void resolverRelacionamentosAdvancedSearch(AdvancedSearchRequest filtro) {
@@ -209,10 +199,6 @@ public abstract class AbstractService<E extends AbstractIdentificavel, F extends
 
     protected Specification<E> getSpecification(AdvancedSearchRequest filtro) {
         return new AdvancedSpecification<>(filtro);
-    }
-
-    private boolean isEntidadeCatalogo() {
-        return AbstractSituacaoIdentificavel.class.isAssignableFrom(this.persistentClass);
     }
 
     public List<E> getAllSort(F filtro) {

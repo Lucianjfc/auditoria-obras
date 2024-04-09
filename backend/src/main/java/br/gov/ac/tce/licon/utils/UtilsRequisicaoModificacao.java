@@ -2,7 +2,6 @@ package br.gov.ac.tce.licon.utils;
 
 import br.gov.ac.tce.licon.dtos.requests.ArquivoUploadDTO;
 import br.gov.ac.tce.licon.entities.enums.EnumValor;
-import br.gov.ac.tce.licon.entities.enums.FaseLicitacao;
 import br.gov.ac.tce.licon.exceptions.AppException;
 import com.bedatadriven.jackson.datatype.jts.parsers.GenericGeometryParser;
 import com.bedatadriven.jackson.datatype.jts.serialization.GeometryDeserializer;
