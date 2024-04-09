@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime
 import math
 from elasticsearch import Elasticsearch
-import os
+from sentence_transformers import SentenceTransformer
 
 def criar_caracteristicas(df, row, month, desonerado=False):
     caracteristicas = {}
@@ -117,13 +117,14 @@ for key, value in sub_folders.items():
 dataset_sinapi = df_consolidado.groupby(['CODIGO', 'DESCRICAO'])['CARACTERISTICAS'].agg(combinar_arrays).reset_index()
 dataset_sinapi[['CARACTERISTICAS_DESONERADO', 'CARACTERISTICAS_NAO_DESONERADO']] = dataset_sinapi.apply(separar_caracteristicas, axis=1)
 dataset_sinapi = dataset_sinapi[['CODIGO', 'DESCRICAO', 'CARACTERISTICAS_DESONERADO', 'CARACTERISTICAS_NAO_DESONERADO']]
-print(dataset_sinapi.head())
 
+
+
+model_all_mini = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+dataset_sinapi['ALL_MINI_BASE_VECTOR'] = dataset_sinapi['DESCRICAO'].apply(lambda x: model_all_mini.encode(x))
 
 ELASTIC_PASSWORD = "elastic"
 es = Elasticsearch(hosts="http://localhost:9200", basic_auth=("elastic", "elastic"), verify_certs=False)
-
-
 
 body_sinapi = {
     "settings":{
@@ -180,9 +181,16 @@ body_sinapi = {
                     "DESONERADO": {"type": "boolean"}
                 }
             },
+            "ALL_MINI_VECT": {
+                "type": "dense_vector",
+                "dims": 384,
+                "index": True,
+                "similarity": "cosine"
+            },
         }
     }
 }
+
 
 INDEX_NAME_SINAPI = "sinapi_index"
 
