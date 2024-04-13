@@ -2,8 +2,11 @@ package br.gov.ac.tce.licon.services.impl;
 
 import br.gov.ac.tce.licon.configuration.PaginationConfig;
 import br.gov.ac.tce.licon.dtos.requests.CatalogoObraRequest;
+import br.gov.ac.tce.licon.dtos.requests.Page;
 import br.gov.ac.tce.licon.dtos.responses.BuscaResponse;
 import br.gov.ac.tce.licon.dtos.responses.ReferenciaDTO;
+import br.gov.ac.tce.licon.dtos.responses.SicroResponse;
+import br.gov.ac.tce.licon.dtos.responses.SinapiResponse;
 import br.gov.ac.tce.licon.entities.ItemObra;
 import br.gov.ac.tce.licon.entities.elastic.CaracteristicaSicroElastic;
 import br.gov.ac.tce.licon.entities.elastic.CaracteristicaSinapiElastic;
@@ -12,6 +15,7 @@ import br.gov.ac.tce.licon.entities.elastic.SinapiElastic;
 import br.gov.ac.tce.licon.exceptions.AppException;
 import br.gov.ac.tce.licon.services.CatalogoObraElasticService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHeaders;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.index.search.MatchQueryParser;
@@ -24,7 +28,9 @@ import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.Query;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -43,90 +49,22 @@ public class CatalogoObraElasticServiceImpl implements CatalogoObraElasticServic
     protected PaginationConfig paginationConfig;
 
     public BuscaResponse<SinapiElastic> searchSinapi(CatalogoObraRequest filtro) {
-        String query = filtro.getSearch();
-
-        MatchQueryBuilder textQuery = QueryBuilders.matchQuery("DESCRICAO", query)
-                .operator(Operator.OR)
-                .fuzziness(Fuzziness.TWO)
-                .zeroTermsQuery(MatchQueryParser.ZeroTermsQuery.ALL);
-
-        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-
-        if (!query.contains("[a-zA-Z]+")) {
-            boolQuery.should(textQuery);
-        }
-
-        if (filtro.getFilters() != null && filtro.getFilters().size() > 0) {
-            filtro.getFilters().forEach((filter) -> addTermQuery(boolQuery, filter.getField(), filter.getValue()));
-        }
-
-        int pageIndex = filtro.getPage().getIndex() - 1;
-        int pageSize = filtro.getPage().getSize();
-
-        Query searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(boolQuery)
-                .withPageable(PageRequest.of(pageIndex, pageSize))
-                .withHighlightFields(new HighlightBuilder.Field("DESCRICAO"))
-                .build();
-
-        SearchHits<SinapiElastic> hits = elasticsearchOperations.search(searchQuery, SinapiElastic.class, IndexCoordinates.of(INDEX_SINAPI));
-
         BuscaResponse<SinapiElastic> response = new BuscaResponse<>();
-
-        List<SinapiElastic> results = hits.stream().map(searchHit -> {
-            SinapiElastic result = searchHit.getContent();
-            BigDecimal score = BigDecimal.valueOf(searchHit.getScore());
-            result.setScore(score);
-            return result;
-        }).collect(Collectors.toList());
-
-        response.setTotal(hits.getTotalHits());
-        response.setItems(results);
-
+        String url = "http://localhost:5001/search-sinapi";
+        RestTemplate restTemplate = new RestTemplate();
+        SinapiResponse items = restTemplate.postForObject(url, filtro, SinapiResponse.class);
+        response.setItems(items.getResponse());
+        response.setTotal(items.getResponse().size());
         return response;
     }
 
     public BuscaResponse<SicroElastic> searchSicro(CatalogoObraRequest filtro) {
-        String query = filtro.getSearch();
-
-        MatchQueryBuilder textQuery = QueryBuilders.matchQuery("DESCRICAO", query)
-                .operator(Operator.OR)
-                .fuzziness(Fuzziness.TWO)
-                .zeroTermsQuery(MatchQueryParser.ZeroTermsQuery.ALL);
-
-        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-
-        if (!query.contains("[a-zA-Z]+")) {
-            boolQuery.should(textQuery);
-        }
-
-        if (filtro.getFilters() != null && filtro.getFilters().size() > 0) {
-            filtro.getFilters().forEach((filter) -> addTermQuery(boolQuery, filter.getField(), filter.getValue()));
-        }
-
-        int pageIndex = filtro.getPage().getIndex() - 1;
-        int pageSize = filtro.getPage().getSize();
-
-        Query searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(boolQuery)
-                .withPageable(PageRequest.of(pageIndex, pageSize))
-                .withHighlightFields(new HighlightBuilder.Field("DESCRICAO"))
-                .build();
-
-        SearchHits<SicroElastic> hits = elasticsearchOperations.search(searchQuery, SicroElastic.class, IndexCoordinates.of(INDEX_SICRO));
-
         BuscaResponse<SicroElastic> response = new BuscaResponse<>();
-
-        List<SicroElastic> results = hits.stream().map(searchHit -> {
-            SicroElastic result = searchHit.getContent();
-            BigDecimal score = BigDecimal.valueOf(searchHit.getScore());
-            result.setScore(score);
-            return result;
-        }).collect(Collectors.toList());
-
-        response.setTotal(hits.getTotalHits());
-        response.setItems(results);
-
+        String url = "http://localhost:5001/search-sicro";
+        RestTemplate restTemplate = new RestTemplate();
+        SicroResponse items = restTemplate.postForObject(url, filtro, SicroResponse.class);
+        response.setItems(items.getResponse());
+        response.setTotal(items.getResponse().size());
         return response;
     }
 
@@ -164,15 +102,15 @@ public class CatalogoObraElasticServiceImpl implements CatalogoObraElasticServic
 
     @Override
     public SicroElastic searchByDescricaoSicro(String descricao) throws AppException {
-        TermQueryBuilder termQuery = QueryBuilders.termQuery("DESCRICACAO", descricao);
-        Query searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(termQuery)
-                .build();
-
-        SearchHit<SicroElastic> result = elasticsearchOperations.searchOne(searchQuery, SicroElastic.class, IndexCoordinates.of(INDEX_SICRO));
-
-        if (result != null) {
-            return result.getContent();
+        CatalogoObraRequest catalogoObraRequest = new CatalogoObraRequest();
+        catalogoObraRequest.setSearch(descricao);
+        Page page = new Page();
+        page.setIndex(1);
+        page.setSize(1);
+        catalogoObraRequest.setPage(page);
+        BuscaResponse<SicroElastic> response = this.searchSicro(catalogoObraRequest);
+        if (response != null && response.getItems().size() > 0) {
+            return response.getItems().get(0);
         } else {
             return null;
         }
@@ -180,15 +118,15 @@ public class CatalogoObraElasticServiceImpl implements CatalogoObraElasticServic
 
     @Override
     public SinapiElastic searchByDescricaoSinapi(String descricao) throws AppException {
-        TermQueryBuilder termQuery = QueryBuilders.termQuery("DESCRICAO", descricao);
-        Query searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(termQuery)
-                .build();
-
-        SearchHit<SinapiElastic> result = elasticsearchOperations.searchOne(searchQuery, SinapiElastic.class, IndexCoordinates.of(INDEX_SINAPI));
-
-        if (result != null) {
-            return result.getContent();
+        CatalogoObraRequest catalogoObraRequest = new CatalogoObraRequest();
+        catalogoObraRequest.setSearch(descricao);
+        Page page = new Page();
+        page.setIndex(1);
+        page.setSize(1);
+        catalogoObraRequest.setPage(page);
+        BuscaResponse<SinapiElastic> response = this.searchSinapi(catalogoObraRequest);
+        if (response != null && response.getItems().size() > 0) {
+            return response.getItems().get(0);
         } else {
             return null;
         }

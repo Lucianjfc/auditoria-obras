@@ -1,9 +1,9 @@
 const UrlRouter = {
   auditoria: {
-    default: '/relatorio-obra',
+    default: '/',
     relatorioObra: {
-      index: '/relatorio-obra',
-      listagem: '/relatorio-obra/listagem-relatorios',
+      index: '/',
+      listagem: '/listagem-relatorios',
       novo: '/relatorio-obra/novo',
       editar: '/relatorio-obra/editar/:id',
     },
