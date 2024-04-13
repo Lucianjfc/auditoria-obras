@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,14 +19,17 @@ import java.util.List;
 public class RelatorioObra extends AbstractIdentificavel {
 
 
-    @Column(name = "DATA_ANALISE")
-    private LocalDateTime dataAnalise;
+    @Column(name = "DATA_CADASTRO")
+    private LocalDateTime dataCadastro;
 
-    @Column(name = "OBSERVACAO")
-    private String observacao;
+    @Column(name = "VALOR_LICITACAO")
+    private BigDecimal valorLicitacao;
 
     @Column(name = "TITULO")
     private String titulo;
+
+    @Column(name = "AUTOR")
+    private  String autor;
 
     @OneToMany(mappedBy = "relatorioObra", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "relatorioObra"}, allowSetters = true)

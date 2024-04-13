@@ -58,7 +58,7 @@ class CardsPrecos extends React.Component {
             </div>
             <div className="card-value-obra">
               <span className="flex align-items-center gap-2 w-full	justify-content-between">
-                <span className="text-3xl">{getValueMoney(10000)}</span>
+                <span className="text-3xl">{getValueMoney(this.props.licitacao.valorLicitacao ?? 0)}</span>
                 <div className="icon-rounded-wrapper" style={{ backgroundColor: '#cffafe' }}>
                   <i className="pi pi-money-bill icon-rounded" style={{ fontSize: '24px', color: '#06b6d4' }} />
                 </div>

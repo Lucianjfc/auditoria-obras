@@ -6,7 +6,7 @@ import { PrimeIcons } from 'primereact/api';
 import UrlRouter from '../../constants/UrlRouter';
 import GenericIndexPage from '~/pages/GenericIndexPage';
 import DadosEstaticosService from '../../services/DadosEstaticosService';
-import { getValueDate } from '~/utils/utils';
+import { getValueDate, getValueMoney } from '~/utils/utils';
 import AdvancedSearch from '~/components/AdvancedSearch';
 import RelatorioObraIndexStore from '~/stores/relatorioObra/indexStore';
 import { Dialog } from 'primereact/dialog';
@@ -119,6 +119,23 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
         sortable: true,
       },
       {
+        field: 'autor',
+        header: 'Autor',
+        sortable: true,
+      },
+      {
+        field: 'valorLicitacao',
+        header: 'Valor da Licitação',
+        sortable: true,
+        body: ({ valorLicitacao }) => getValueMoney(valorLicitacao),
+      },
+      {
+        field: 'dataCadastro',
+        header: 'Data de Cadastro',
+        sortable: true,
+        body: ({ dataCadastro }) => getValueDate(dataCadastro, DATE_FORMAT_WITH_HOURS, DATE_PARSE_FORMAT_WITH_HOURS),
+      },
+      {
         style: { width: '110px' },
         body: (rowData) => {
           return (
@@ -171,28 +188,15 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
     return (
       <div>
         <div className="card page index-table">
-          <div className="flex flex-column w-full">
-            <div className="w-full flex">
-              <h1
-                style={{
-                  fontSize: '36px',
-                  color: '#333',
-                  fontWeight: 'bold',
-                  letterSpacing: '2px',
-                  marginLeft: '1rem',
-                }}
-              >
-                Relatórios
-              </h1>
-            </div>
-          </div>
-
           <AppBreadCrumb items={breacrumbItems} />
-          <AdvancedSearch
-            searchParams={this.store.getAdvancedSearchParams()}
-            store={this.store}
-            searchFields={['nome']}
-          />
+          <div className="flex justify-content-center flex-wrap mt-4">
+            <AdvancedSearch
+              style={{ width: '50%' }}
+              searchParams={this.store.getAdvancedSearchParams()}
+              store={this.store}
+              searchFields={['nome']}
+            />
+          </div>
           <IndexDataTable
             setColumnsToExport={this.setColumnsToExport}
             columns={columns}

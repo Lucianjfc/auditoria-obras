@@ -204,6 +204,11 @@ class RelatorioObraFormStore extends FormBase {
         { rule: 'required', message: 'Por favor, preencha o campo' },
         { rule: 'isMaxLength', maxLength: 300, message: 'Por favor, diminua o tamanho do campo' },
       ],
+      autor: [
+        { rule: 'required', message: 'Por favor, preencha o campo' },
+        { rule: 'isMaxLength', maxLength: 255, message: 'Por favor, diminua o tamanho do campo' },
+      ],
+      valorLicitacao: [{ rule: 'required', message: 'Por favor, preencha o campo' }],
     };
   }
 

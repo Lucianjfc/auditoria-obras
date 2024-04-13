@@ -30,6 +30,7 @@ class RelatorioObraIndexPage extends GenericIndexPage {
       activeTabIndex: 0,
       dialogVisibility: false,
       selectedItem: undefined,
+      fonte: undefined,
     };
   }
 
@@ -85,11 +86,11 @@ class RelatorioObraIndexPage extends GenericIndexPage {
           <ItemDetail item={this.state.selectedItem} mesColeta={mesColeta} desonerado={false} />
           <div className="p-col-12">
             <Precos
-              title={'SINAPI - Curva de preço'}
-              desonerado={false}
+              title={(this.state.fonte ?? 'sinapi') == 'sinapi' ? 'SINAPI - Curva de preço' : 'SICRO - Curva de Preço'}
+              desonerado
               precosDesonerados={this.state.selectedItem?.caracteristicasDesonerado}
               precosNaoDesonerados={this.state.selectedItem?.caracteristicasNaoDesonerado}
-              fonte={'sinapi'}
+              fonte={this.state.fonte ?? 'sinapi'}
             />
           </div>
         </div>
@@ -205,7 +206,7 @@ class RelatorioObraIndexPage extends GenericIndexPage {
             type="button"
             onClick={() => {
               this.switchVisibility();
-              this.setState({ selectedItem: row });
+              this.setState({ selectedItem: row, fonte: 'sinapi' });
             }}
           />
         ),
@@ -225,7 +226,7 @@ class RelatorioObraIndexPage extends GenericIndexPage {
             type="button"
             onClick={() => {
               this.switchVisibility();
-              this.setState({ selectedItem: row });
+              this.setState({ selectedItem: row, fonte: 'sicro' });
             }}
           />
         ),
@@ -381,13 +382,15 @@ class RelatorioObraIndexPage extends GenericIndexPage {
   render() {
     return (
       <div className="h-full">
-        <AdvancedSearch
-          searchParams={this.store.getAdvancedSearchParams()}
-          store={this.store}
-          searchFields={['query']}
-          className="w-full"
-          elasticsearch
-        />
+        <div className="flex justify-content-center flex-wrap mt-4">
+          <AdvancedSearch
+            style={{ width: '50%' }}
+            searchParams={this.store.getAdvancedSearchParams()}
+            store={this.store}
+            searchFields={['query']}
+            elasticsearch
+          />
+        </div>
         {this.renderTabs()}
         {this.renderDialog()}
       </div>

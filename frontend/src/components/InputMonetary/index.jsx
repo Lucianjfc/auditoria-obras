@@ -35,6 +35,7 @@ class InputMonetary extends React.Component {
 
   //transforma de um formato já tratado para um formato numérico - ex com duas casas decimais: (123.546.231,65) -> (123546231.65)
   _parse(value) {
+    if (value === '') value = '0';
     let valor = this._cleanUserInput(value); // limpa o valor, mantendo apenas os valores numéricos
     valor += '';
     valor = parseInt(valor.replace(/[^0-9]+/g, '')) / this.fractionalPart;

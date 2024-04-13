@@ -54,7 +54,7 @@ public class CatalogoObraElasticServiceImpl implements CatalogoObraElasticServic
         RestTemplate restTemplate = new RestTemplate();
         SinapiResponse items = restTemplate.postForObject(url, filtro, SinapiResponse.class);
         response.setItems(items.getResponse());
-        response.setTotal(items.getResponse().size());
+        response.setTotal(10000);
         return response;
     }
 
@@ -64,7 +64,7 @@ public class CatalogoObraElasticServiceImpl implements CatalogoObraElasticServic
         RestTemplate restTemplate = new RestTemplate();
         SicroResponse items = restTemplate.postForObject(url, filtro, SicroResponse.class);
         response.setItems(items.getResponse());
-        response.setTotal(items.getResponse().size());
+        response.setTotal(10000);
         return response;
     }
 

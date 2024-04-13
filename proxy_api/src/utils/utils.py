@@ -49,6 +49,7 @@ def obter_caracteristicas_sinapi(caracteristicas):
 
 
 def criar_novo_objeto_sinapi(objeto):
+    print(objeto)
     novo_objeto = {
         "score": objeto.get("_score"),
         "codigo": objeto["_source"].get("CODIGO"),

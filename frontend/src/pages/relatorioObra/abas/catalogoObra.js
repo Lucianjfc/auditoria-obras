@@ -265,7 +265,9 @@ class CatalogoObra extends GenericIndexPage {
             {row?.caracteristicasNaoDesonerado?.length && (
               <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 <Tag
-                  value={`Unidade: ${row?.caracteristicasNaoDesonerado[0]?.unidadeMedida}`}
+                  value={`Unidade: ${
+                    row?.caracteristicasNaoDesonerado[row?.caracteristicasNaoDesonerado?.length - 1]?.unidadeMedida
+                  }`}
                   rounded
                   style={{ backgroundColor: '#f59e0b' }}
                 />
@@ -457,14 +459,16 @@ class CatalogoObra extends GenericIndexPage {
     if (this.store) {
       content = (
         <div className="grid">
-          <div className="flex col-12 mt-2 flex-column align-items-end">
-            <AdvancedSearch
-              searchParams={this.store.getAdvancedSearchParams()}
-              store={this.store}
-              searchFields={['query']}
-              className="w-full"
-              elasticsearch
-            />
+          <div className="flex col-12 mt-2">
+            <div className="flex justify-content-center flex-wrap mt-4 w-full">
+              <AdvancedSearch
+                searchParams={this.store.getAdvancedSearchParams()}
+                store={this.store}
+                searchFields={['query']}
+                style={{ width: '50%' }}
+                elasticsearch
+              />
+            </div>
           </div>
           {this.renderTabs()}
           {this.renderDialog()}

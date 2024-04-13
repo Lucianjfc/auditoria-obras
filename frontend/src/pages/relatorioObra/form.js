@@ -98,7 +98,8 @@ class RelatorioObraFormPage extends GenericFormPage {
     const { submitFormData } = this;
 
     const breacrumbItems = [
-      { label: 'Relatórios Auditoria Obra', url: UrlRouter.auditoria.relatorioObra.index },
+      { label: 'Banco de Preços', url: UrlRouter.auditoria.relatorioObra.index },
+      { label: 'Relatórios Auditoria Obra', url: UrlRouter.auditoria.relatorioObra.listagem },
       { label: this.props.action === 'new' ? 'Novo' : 'Editar' },
     ];
 

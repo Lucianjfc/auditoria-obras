@@ -58,7 +58,7 @@ class FormResumo extends React.Component {
     return (
       <div className="p-fluid p-grid">
         <div className="p-col-12">
-          <CardsPrecos itens={this.store.itensObra} licitacao={this.store.object.licitacao} />
+          <CardsPrecos itens={this.store.itensObra} licitacao={this.store.object} />
         </div>
         <Divider />
         <div className="p-col-12 flex gap-1">

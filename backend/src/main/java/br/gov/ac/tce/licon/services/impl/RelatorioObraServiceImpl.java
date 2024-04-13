@@ -103,11 +103,16 @@ public class RelatorioObraServiceImpl extends AbstractUploadTipoServiceImpl<Rela
     }
 
     @Override
+    protected void beforeSave(RelatorioObra entity) {
+        entity.setDataCadastro(LocalDateTime.now());
+    }
+
+    @Override
     @Transactional
     public void importarRelatorio(RelatorioObra relatorioObra, List<ArquivoRelatorioObraDTO> arquivos) {
         validarArquivos(arquivos);
         relatorioObra.setImportado(true);
-        relatorioObra.setDataAnalise(LocalDateTime.now());
+        relatorioObra.setDataCadastro(LocalDateTime.now());
         RelatorioObra relatorioObraPersisted = this.repository.save(relatorioObra);
         saveArquivos(arquivos, relatorioObraPersisted);
         RelatorioObra relatorio = this.gerarItensImportados(relatorioObraPersisted);

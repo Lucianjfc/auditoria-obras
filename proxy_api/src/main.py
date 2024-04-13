@@ -16,7 +16,7 @@ es = Elasticsearch(hosts="http://localhost:9200", basic_auth=("elastic", "elasti
 
 def get_source_by_index(index):
     sources = [
-        {INDEX_NAME_SINAPI: ["CODIGO", "DESCRICAO", "UNIDADE",	"ORIGEM_DO_PRECO", "PRECO_MEDIANO",	"CATEGORIA"]},
+        {INDEX_NAME_SINAPI: ["CODIGO", "DESCRICAO", "CARACTERISTICAS_NAO_DESONERADO", "CARACTERISTICAS_DESONERADO"]},
         {INDEX_NAME_SICRO: ["CODIGO", "DESCRICAO", "CARACTERISTICAS_NAO_DESONERADO", "CARACTERISTICAS_DESONERADO"]}]
 
     for source_dict in sources:
@@ -69,7 +69,7 @@ def search_sinapi():
 
             vector_input = model_all_mini.encode(search_query)
             response = run_query(vector_input, INDEX_NAME_SINAPI, get_source_by_index(INDEX_NAME_SINAPI), page_index, page_size)
-            print(response)
+            print(response[0])
             nova_lista_objetos = [criar_novo_objeto_sinapi(objeto) for objeto in response]
             return jsonify({"message": "Consulta recebida com sucesso", "response": nova_lista_objetos}), 200
         else:

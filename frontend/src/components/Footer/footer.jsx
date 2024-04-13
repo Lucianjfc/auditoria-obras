@@ -1,4 +1,4 @@
-import { Github, Linkedin } from 'lucide-react';
+import { Github } from 'lucide-react';
 import React from 'react';
 
 export const Footer = () => (
@@ -18,7 +18,6 @@ export const Footer = () => (
       </div>
       <div className="flex flex-col col justify-content-end gap-2">
         <div className="flex gap-8">
-          <Linkedin size={18} />
           <Github size={18} />
         </div>
 

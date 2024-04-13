@@ -4,14 +4,13 @@ import DomainBase from '~/domains/DomainBase';
 class RelatorioObra extends DomainBase {
   @observable id;
   @observable titulo;
-  @observable observacao;
-  @observable dataAnalise;
-  @observable usuario;
-  @observable licitacao;
+  @observable valorLicitacao;
   @observable itensObra;
+  @observable autor;
+  @observable dataCadastro;
 
   static getDomainAttributes() {
-    return ['id', 'titulo', 'observacao', 'dataAnalise', 'usuario', 'licitacao'];
+    return ['id', 'titulo', 'dataCadastro', 'autor', 'valorLicitacao'];
   }
 }
 
