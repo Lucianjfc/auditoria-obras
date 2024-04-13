@@ -162,9 +162,9 @@ class ItensObraListagem extends Component {
               <div className="flex gap-1 align-items-center">
                 <Tag
                   style={{
-                    color: '#f43f5e',
+                    color: '#737373',
                     backgroundColor: '#F5F9FF',
-                    border: `1px solid #f43f5e`,
+                    border: `1px solid #737373`,
                   }}
                 >
                   <Tooltip value="Fonte">
@@ -199,7 +199,7 @@ class ItensObraListagem extends Component {
                 >
                   <Tooltip value="Valor da aquisição">
                     <span className="flex gap-1 align-items-center">
-                      <span>Valor da Aquisição: {getValueMoney(data.valorComprado)}</span>
+                      <span>Valor da Compra: {getValueMoney(data.valorComprado)}</span>
                     </span>
                   </Tooltip>
                 </Tag>

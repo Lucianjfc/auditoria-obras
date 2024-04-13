@@ -1,10 +1,9 @@
 import './style.scss';
 import React from 'react';
-import { getNumberFractionDigits, getPrecoByFonte, getSumFromRawData, getValueMoney } from '~/utils/utils';
+import { getPrecoByFonte, getSumFromRawData, getValueMoney } from '~/utils/utils';
 import PropTypes from 'prop-types';
-import Tooltip from '~/components/Tooltip';
 import StoreIcon from './storeIcon';
-import PercentIcon from './percentIcon';
+// import PercentIcon from './percentIcon';
 
 class CardsPrecos extends React.Component {
   constructor(props) {
@@ -69,7 +68,7 @@ class CardsPrecos extends React.Component {
         <div className="card-obra">
           <div className="card-content-obra flex flex-column gap-4">
             <div className="card-title-wrapper">
-              <span className="card-title-obra">Receita Total: Mercado</span>
+              <span className="card-title-obra">Valor do Mercado</span>
               <StoreIcon />
             </div>
             <div className="card-value-obra">
@@ -80,9 +79,9 @@ class CardsPrecos extends React.Component {
                   style={{ backgroundColor: vTotalItensMercado < vTotalitensComprados ? '#dcfce7' : '#fee2e2' }}
                 >
                   {vTotalItensMercado < vTotalitensComprados ? (
-                    <i className="pi pi-arrow-down-right icon-rounded" style={{ color: '#22c55e' }} />
+                    <i className="pi pi-arrow-down icon-rounded" style={{ color: '#22c55e' }} />
                   ) : (
-                    <i className="pi pi-arrow-up-right icon-rounded" style={{ color: '#ef4444' }} />
+                    <i className="pi pi-arrow-up icon-rounded" style={{ color: '#ef4444' }} />
                   )}
                 </div>
               </span>
@@ -92,7 +91,7 @@ class CardsPrecos extends React.Component {
         <div className="card-obra">
           <div className="card-content-obra flex flex-column gap-4">
             <div className="card-title-wrapper">
-              <span className="card-title-obra">Receita Total: Comprados</span>
+              <span className="card-title-obra">Valor de Compra</span>
               <i className="pi pi-shopping-bag" style={{ fontSize: '24px' }} />
             </div>
             <div className="card-value-obra">
@@ -103,52 +102,46 @@ class CardsPrecos extends React.Component {
                   style={{ backgroundColor: vTotalitensComprados > vTotalItensMercado ? '#fee2e2' : '#dcfce7' }}
                 >
                   {vTotalitensComprados > vTotalItensMercado ? (
-                    <i className="pi pi-arrow-up-right icon-rounded" style={{ color: '#ef4444' }} />
+                    <i className="pi pi-arrow-up icon-rounded" style={{ color: '#ef4444' }} />
                   ) : (
-                    <i className="pi pi-arrow-up-right icon-rounded" style={{ color: '#22c55e' }} />
+                    <i className="pi pi-arrow-up icon-rounded" style={{ color: '#22c55e' }} />
                   )}
                 </div>
               </span>
             </div>
           </div>
         </div>
-        <div className="card-obra">
+        {/* <div className="card-obra">
           <div className="card-content-obra flex flex-column gap-4">
             <div className="card-title-wrapper">
               <span className="card-title-obra">Diferença em Porcentagem</span>
               <PercentIcon />
             </div>
             <div className="card-value-obra">
-              <Tooltip
-                value={
-                  vTotalitensComprados > vTotalItensMercado ? 'Acima do valor de mercado' : 'Abaixo do valor mercado'
-                }
-              >
-                <span className="flex align-items-center gap-2 w-full justify-content-between">
-                  <span className="text-3xl">
-                    {vTotalItensMercado > 0
-                      ? `${getNumberFractionDigits(
-                          ((this.state.vTotalitensComprados - this.state.vTotalItensMercado) /
-                            this.state.vTotalItensMercado) *
-                            100
-                        )}%`
-                      : '0 %'}
-                  </span>
-                  <div
-                    className="icon-rounded-wrapper"
-                    style={{ backgroundColor: vTotalitensComprados > vTotalItensMercado ? '#fee2e2' : '#dcfce7' }}
-                  >
-                    {vTotalitensComprados > vTotalItensMercado ? (
-                      <i className="pi pi-arrow-up-right icon-rounded" style={{ color: '#ef4444' }} />
-                    ) : (
-                      <i className="pi pi-arrow-up-right icon-rounded" style={{ color: '#22c55e' }} />
-                    )}
-                  </div>
+              <span className="flex align-items-center gap-2 w-full justify-content-between">
+                <span className="text-3xl">
+                  {vTotalItensMercado > 0
+                    ? `${getNumberFractionDigits(
+                        ((this.state.vTotalitensComprados - this.state.vTotalItensMercado) /
+                          this.state.vTotalItensMercado) *
+                          100
+                      )}%`
+                    : '0 %'}
                 </span>
-              </Tooltip>
+                <div
+                  className="icon-rounded-wrapper"
+                  style={{ backgroundColor: vTotalitensComprados > vTotalItensMercado ? '#fee2e2' : '#dcfce7' }}
+                >
+                  {vTotalitensComprados > vTotalItensMercado ? (
+                    <i className="pi pi-arrow-up icon-rounded" style={{ color: '#ef4444' }} />
+                  ) : (
+                    <i className="pi pi-arrow-up icon-rounded" style={{ color: '#22c55e' }} />
+                  )}
+                </div>
+              </span>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="card-obra">
           <div className="card-content-obra flex flex-column gap-4">
             <div className="card-title-wrapper">
@@ -156,27 +149,21 @@ class CardsPrecos extends React.Component {
               <i className="pi pi-money-bill" style={{ fontSize: '24px' }} />
             </div>
             <div className="card-value-obra">
-              <Tooltip
-                value={
-                  vTotalitensComprados > vTotalItensMercado ? 'Acima do valor de mercado' : 'Abaixo do valor mercado'
-                }
-              >
-                <span className="flex align-items-center gap-2 w-full justify-content-between">
-                  <span className="text-3xl">{`${getValueMoney(
-                    this.state.vTotalitensComprados - this.state.vTotalItensMercado
-                  )}`}</span>
-                  <div
-                    className="icon-rounded-wrapper"
-                    style={{ backgroundColor: vTotalitensComprados > vTotalItensMercado ? '#fee2e2' : '#dcfce7' }}
-                  >
-                    {vTotalitensComprados > vTotalItensMercado ? (
-                      <i className="pi pi-arrow-up-right icon-rounded" style={{ color: '#ef4444' }} />
-                    ) : (
-                      <i className="pi pi-arrow-up-right icon-rounded" style={{ color: '#22c55e' }} />
-                    )}
-                  </div>
-                </span>
-              </Tooltip>
+              <span className="flex align-items-center gap-2 w-full justify-content-between">
+                <span className="text-3xl">{`${getValueMoney(
+                  this.state.vTotalitensComprados - this.state.vTotalItensMercado
+                )}`}</span>
+                <div
+                  className="icon-rounded-wrapper"
+                  style={{ backgroundColor: vTotalitensComprados > vTotalItensMercado ? '#fee2e2' : '#dcfce7' }}
+                >
+                  {vTotalitensComprados > vTotalItensMercado ? (
+                    <i className="pi pi-arrow-up icon-rounded" style={{ color: '#ef4444' }} />
+                  ) : (
+                    <i className="pi pi-arrow-up icon-rounded" style={{ color: '#22c55e' }} />
+                  )}
+                </div>
+              </span>
             </div>
           </div>
         </div>
