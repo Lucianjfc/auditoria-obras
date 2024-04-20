@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPercent, getPrecoByFonte, getSumFromRawData } from '~/utils/utils';
+import { getNumberFractionDigits, getPercent, getPrecoByFonte, getSumFromRawData, getValueMoney } from '~/utils/utils';
 import ReactEcharts from 'echarts-for-react';
 import PropTypes from 'prop-types';
 
@@ -16,14 +16,35 @@ class Abc extends React.Component {
     };
   }
 
-  getClassificacaoByPercent(percentAccumulated) {
-    if (percentAccumulated <= 50) {
-      return 'A';
-    } else if (percentAccumulated <= 80) {
-      return 'B';
-    } else {
-      return 'C';
-    }
+  getClassificacaoByPercent(array) {
+    return array.map((item) => {
+      if (item.percentualAcumulado <= 80) {
+        item['categoria'] = 'A';
+      } else if (item.percentualAcumulado > 80 && item.percentualAcumulado <= 95) {
+        item['categoria'] = 'B';
+      } else if (item.percentualAcumulado > 95 && item.percentualAcumulado <= 100) {
+        item['categoria'] = 'C';
+      }
+      return item;
+    });
+  }
+
+  calcularSomaAcumulada(array) {
+    let somaAcumulada = 0;
+    return array.map((item) => {
+      somaAcumulada += item.valor;
+      item['somaAcumulada'] = somaAcumulada;
+      return item;
+    });
+  }
+
+  calcularPercentualAcumulado(array) {
+    let percent = 0;
+    return array.map((item) => {
+      percent += item.percent;
+      item['percentualAcumulado'] = percent;
+      return item;
+    });
   }
 
   componentDidMount() {
@@ -47,34 +68,23 @@ class Abc extends React.Component {
       return { codigo: item.codigo, nome: descricao, valor };
     });
 
+    itensMercado = this.calcularSomaAcumulada(itensMercado);
+    itensComprados = this.calcularSomaAcumulada(itensComprados);
+
     const sumItensMercado = getSumFromRawData(itensMercado, 'valor');
     const sumItensComprados = getSumFromRawData(itensComprados, 'valor');
 
     itensMercado = itensMercado.map((item) => ({ ...item, percent: getPercent(item.valor, sumItensMercado) }));
     itensComprados = itensComprados.map((item) => ({ ...item, percent: getPercent(item.valor, sumItensComprados) }));
 
+    itensMercado = this.calcularPercentualAcumulado(itensMercado);
+    itensComprados = this.calcularPercentualAcumulado(itensComprados);
+
     const sortedItensMercado = itensMercado.slice().sort((a, b) => b.valor - a.valor);
     const sortedItensComprados = itensComprados.slice().sort((a, b) => b.valor - a.valor);
 
-    let currentPercent = 0;
-    itensMercado.forEach((item, idx) => {
-      if (idx === 0) {
-        itensMercado[idx].categoria = this.getClassificacaoByPercent(item.percent);
-      } else {
-        itensMercado[idx].categoria = this.getClassificacaoByPercent(item.percent + currentPercent);
-      }
-      currentPercent += item.percent;
-    });
-
-    currentPercent = 0;
-    itensComprados.forEach((item, idx) => {
-      if (idx === 0) {
-        itensComprados[idx].categoria = this.getClassificacaoByPercent(item.percent);
-      } else {
-        itensComprados[idx].categoria = this.getClassificacaoByPercent(item.percent + currentPercent);
-      }
-      currentPercent += item.percent;
-    });
+    itensMercado = this.getClassificacaoByPercent(sortedItensMercado);
+    itensComprados = this.getClassificacaoByPercent(sortedItensComprados);
 
     this.setState({
       dataItensMercado: sortedItensMercado,
@@ -85,186 +95,116 @@ class Abc extends React.Component {
   }
 
   getXValues() {
-    const { dataItensMercado } = this.state;
-    const incrementPercentItensMercado = 100 / dataItensMercado?.length;
-    const result = [0];
-    let increment = 0;
-    for (let index = 0; index < dataItensMercado.length; index++) {
-      increment = increment + incrementPercentItensMercado;
-      result.push(parseFloat(increment.toFixed(2)));
-    }
-    return result;
+    return this.state.dataItensComprados.map((item) => item.valor);
   }
 
   getYValues() {
-    const { dataItensMercado } = this.state;
-    const result = [0];
-    let increment = 0;
-    dataItensMercado.forEach((i) => {
-      increment = increment + i.percent;
-      result.push(parseFloat(increment.toFixed(2)));
-    });
-    return result;
+    return this.state.dataItensComprados.map((item) => item.percentualAcumulado);
   }
 
-  getPieces(xValues) {
-    let pieces = [
-      {
-        gt: 0,
-        lt: 5,
-        color: '#f87171',
-      },
-      {
-        gt: 0,
-        lt: 5,
-        color: '#38bdf8',
-      },
-      {
-        gt: 0,
-        lt: 6,
-        color: '#fb923c',
-      },
-    ];
+  getCatagory() {
+    return this.state.dataItensComprados.map((item) => item.codigo);
+  }
 
-    let currentIndex = 0;
-    let incrementValue = 0;
-    xValues?.forEach((v) => {
-      incrementValue = incrementValue + v;
-      if (incrementValue <= 20) {
-        const piece = pieces[0];
-        piece.lt = currentIndex;
-        pieces[0] = piece;
-      } else if (incrementValue > 20 && incrementValue <= 50) {
-        const piece = pieces[1];
-        piece.gt = pieces[0].lt;
-        piece.lt = currentIndex;
-        pieces[1] = piece;
-      } else {
-        const piece = pieces[2];
-        piece.gt = pieces[1].lt;
-        piece.lt = currentIndex;
-        pieces[2] = piece;
-      }
-      currentIndex += 1;
-    });
-    return pieces;
+  getLastIndexCategoria(categoria) {
+    if (this.state.dataItensComprados.length > 0) {
+      let result = this.state.dataItensComprados?.findLastIndex((item) => item.categoria == categoria) ?? 0;
+      return result;
+    } else {
+      return 0;
+    }
   }
 
   render() {
-    const xValues = this.getXValues();
-    const yValues = this.getYValues();
-    const pieces = this.getPieces(xValues);
     const option = {
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: xValues,
-        axisLabel: {
-          formatter: '{value}%',
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          crossStyle: {
+            color: '#999',
+          },
         },
       },
-      yAxis: {
-        type: 'value',
-        boundaryGap: [0, '30%'],
-        axisLabel: {
-          formatter: '{value}%',
-        },
-        axisTick: { interval: 40 },
-        min: 0,
-        max: 100,
+      legend: {
+        data: ['Custo Total Unit', 'Porcentagem Acum.'],
       },
+      xAxis: [
+        {
+          type: 'category',
+          data: this.getCatagory(),
+          axisPointer: {
+            type: 'shadow',
+          },
+        },
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          name: 'Custo Total Unit',
+          min: 0,
+          interval: 500,
+          max: this.state.dataItensComprados[0]?.valor,
+          axisLabel: {
+            formatter: '{value} R$',
+          },
+        },
+        {
+          type: 'value',
+          name: 'Porcentagem Acum.',
+          min: 0,
+          max: 100,
+          axisLabel: {
+            formatter: '{value} %',
+          },
+        },
+      ],
       visualMap: {
         type: 'piecewise',
         show: false,
         dimension: 0,
-        seriesIndex: 0,
-        pieces: pieces,
+        seriesIndex: 1,
+        pieces: [
+          {
+            gt: -1,
+            lt: this.getLastIndexCategoria('A'),
+            color: '#f87171',
+          },
+          {
+            gt: this.getLastIndexCategoria('A'),
+            lt: this.getLastIndexCategoria('B'),
+            color: '#38bdf8',
+          },
+          {
+            gt: this.getLastIndexCategoria('B'),
+            lt: this.getLastIndexCategoria('C'),
+            color: '#fb923c',
+          },
+        ],
       },
       series: [
         {
+          name: 'Custo Total Unit',
+          type: 'bar',
+          tooltip: {
+            valueFormatter: function (value) {
+              return getValueMoney(value);
+            },
+          },
+          data: this.getXValues(),
+          z: 10,
+        },
+        {
+          name: 'Porcentagem Acum.',
           type: 'line',
-          smooth: 0.6,
-          symbol: 'none',
-          lineStyle: {
-            color: '#740013',
-            width: 2,
-          },
-          markPoint: {
-            data: [
-              {
-                coord: [pieces[0].lt, yValues[pieces[0].lt]],
-                label: {
-                  formatter: `${yValues[pieces[0].lt]}%`,
-                },
-              },
-              {
-                coord: [pieces[1].lt, yValues[pieces[1].lt]],
-                label: {
-                  formatter: `${yValues[pieces[1].lt]}%`,
-                },
-              },
-              {
-                coord: [pieces[2].lt, yValues[pieces[2].lt]],
-                label: {
-                  formatter: `${yValues[pieces[2].lt]}%`,
-                },
-              },
-            ],
-          },
-          markLine: {
-            symbol: ['none', 'none'],
-            label: { show: false },
-            data: [
-              { xAxis: pieces[0].gt },
-              { xAxis: pieces[0].lt },
-              { xAxis: pieces[1].gt },
-              { xAxis: pieces[1].lt },
-              { xAxis: pieces[2].gt },
-              { xAxis: pieces[2].lt },
-            ],
-          },
           areaStyle: {},
-          data: yValues,
-          markArea: {
-            label: {
-              position: 'top',
-              fontSize: '40',
-              fontWeight: 'bolder',
-              color: '#27272a',
+          yAxisIndex: 1,
+          tooltip: {
+            valueFormatter: function (value) {
+              return getNumberFractionDigits(value) + ' %';
             },
-            itemStyle: {
-              color: 'rgba(249, 248, 248, 0.8)',
-            },
-            data: [
-              [
-                {
-                  name: 'A',
-                  xAxis: pieces[0].gt,
-                },
-                {
-                  xAxis: pieces[0].lt,
-                },
-              ],
-              [
-                {
-                  name: 'B',
-                  xAxis: pieces[1].gt,
-                },
-                {
-                  xAxis: pieces[1].lt,
-                },
-              ],
-              [
-                {
-                  name: 'C',
-                  xAxis: pieces[2].gt,
-                },
-                {
-                  xAxis: pieces[2].lt,
-                },
-              ],
-            ],
           },
+          data: [...this.getYValues()],
         },
       ],
     };
@@ -277,7 +217,14 @@ class Abc extends React.Component {
             Mercados de Despesas e sua Significância Relativa na Execução de Projetos de Construção
           </h5>
         </span>
-        <ReactEcharts option={option} style={{ height: this.props.height }} id="abc-container" />
+
+        {this.state.dataItensComprados?.length > 0 ? (
+          <ReactEcharts option={option} style={{ height: this.props.height }} id="abc-container" />
+        ) : (
+          <h1>
+            <b>Por favor, adicione itens</b>
+          </h1>
+        )}
       </div>
     );
   }
