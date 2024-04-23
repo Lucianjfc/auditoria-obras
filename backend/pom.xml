@@ -11,16 +11,16 @@
     <groupId>br.gov.ac.tce</groupId>
     <artifactId>licon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>licon</name>
+    <name>obra-api</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
         <jacoco.version>0.8.9</jacoco.version>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.jacoco.reportPath>novo-licon/backend/target/jacoco.exec</sonar.jacoco.reportPath>
-        <sonar.projectName>novo-licon-backend</sonar.projectName>
-        <sonar.projectKey>novo-licon-backend</sonar.projectKey>
+        <sonar.jacoco.reportPath>obras-api/backend/target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.projectName>obras-api-backend</sonar.projectName>
+        <sonar.projectKey>obras-api-backend</sonar.projectKey>
         <sonar.sources>src/main/java</sonar.sources>
         <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
         <sonar.qualitygate.timeout>300</sonar.qualitygate.timeout>

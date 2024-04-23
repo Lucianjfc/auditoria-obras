@@ -160,7 +160,7 @@ class RelatorioObraIndexPage extends GenericIndexPage {
             {row?.caracteristicasNaoDesonerado?.length && (
               <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 <Tag
-                  value={`Unidade: ${row?.caracteristicasNaoDesonerado[0]?.unidadeMedida}`}
+                  value={`Unidade: ${row?.caracteristicasNaoDesonerado[0]?.unidadeMedida?.toUpperCase() ?? '-'}`}
                   rounded
                   style={{ backgroundColor: '#f59e0b' }}
                 />

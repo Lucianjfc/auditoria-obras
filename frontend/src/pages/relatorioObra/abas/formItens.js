@@ -102,7 +102,7 @@ class FormItens extends GenericIndexPage {
           )}
           {this._renderValue(
             'Unidade de Medida',
-            getValue(row?.pdm?.unidadesMedida?.map((um) => um.descricao)?.join(', ')),
+            getValue(row?.pdm?.unidadesMedida?.map((um) => um.descricao)?.join(', '))?.toUpperCase() ?? '-',
             <i className="pi pi-calculator" style={{ color: '#EAB308' }} />,
             3
           )}

@@ -17,16 +17,16 @@ class ItensObraListagem extends Component {
     this.state = {
       produtos: [],
       layout: 'list',
-      sortKey: null,
-      sortOrder: null,
-      sortField: null,
+      sortKey: 'sobrePreco',
+      sortOrder: 1,
+      sortField: 'sobrePreco',
       showVisualizationDialog: false,
       selectedItem: undefined,
     };
 
     this.sortOptions = [
-      { label: 'Sobrepreço', value: '!price' },
-      { label: 'Preço', value: 'price' },
+      { label: 'Sobrepreço', value: 'sobrePreco' },
+      { label: 'Subpreço', value: '!sobrePreco' },
     ];
 
     this.itemTemplate = this.itemTemplate.bind(this);
@@ -64,22 +64,25 @@ class ItensObraListagem extends Component {
 
     produtos = produtos.map((p) => ({ ...p, percent: getPercent(p.valorComprado, sumProdutos) }));
 
-    let currentPercent = 0;
-    produtos.forEach((p, idx) => {
-      if (idx === 0) {
-        produtos[idx].categoria = this.getClassificacaoByPercent(p.percent);
-      } else {
-        produtos[idx].categoria = this.getClassificacaoByPercent(p.percent + currentPercent);
-      }
-      currentPercent += p.percent;
-    });
+    produtos = this.calcularPercentualAcumulado(produtos);
 
     produtos = produtos.slice().sort((a, b) => b.sobrePreco - a.sobrePreco);
+
+    produtos = this.getClassificacaoByPercent(produtos);
 
     this.setState({ produtos }, () => {
       var height = document.getElementById('list-itens');
 
       this.props.callback(height.clientHeight + 'px');
+    });
+  }
+
+  calcularPercentualAcumulado(array) {
+    let percent = 0;
+    return array.map((item) => {
+      percent += item.percent;
+      item['percentualAcumulado'] = percent;
+      return item;
     });
   }
 
@@ -89,17 +92,21 @@ class ItensObraListagem extends Component {
     if (categoria === 'C') return '#fb923c';
   }
 
-  getClassificacaoByPercent(percentAccumulated) {
-    if (percentAccumulated <= 50) {
-      return 'A';
-    } else if (percentAccumulated <= 80) {
-      return 'B';
-    } else {
-      return 'C';
-    }
+  getClassificacaoByPercent(array) {
+    return array.map((item) => {
+      if (item.percentualAcumulado <= 80) {
+        item['categoria'] = 'A';
+      } else if (item.percentualAcumulado > 80 && item.percentualAcumulado <= 95) {
+        item['categoria'] = 'B';
+      } else if (item.percentualAcumulado > 95 && item.percentualAcumulado <= 100) {
+        item['categoria'] = 'C';
+      }
+      return item;
+    });
   }
 
   onSortChange(event) {
+    debugger;
     const value = event.value;
 
     if (value.indexOf('!') === 0) {
@@ -280,8 +287,8 @@ class ItensObraListagem extends Component {
           itemTemplate={this.itemTemplate}
           paginator
           rows={5}
-          // sortOrder={this.state.sortOrder}
-          // sortField={this.state.sortField}
+          sortOrder={this.state.sortOrder}
+          sortField={this.state.sortField}
         />
         {this.renderDialogItemDetail()}
       </div>

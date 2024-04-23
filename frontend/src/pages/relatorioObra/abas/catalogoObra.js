@@ -266,7 +266,9 @@ class CatalogoObra extends GenericIndexPage {
               <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 <Tag
                   value={`Unidade: ${
-                    row?.caracteristicasNaoDesonerado[row?.caracteristicasNaoDesonerado?.length - 1]?.unidadeMedida
+                    row?.caracteristicasNaoDesonerado[
+                      row?.caracteristicasNaoDesonerado?.length - 1
+                    ]?.unidadeMedida?.toUpperCase() ?? '-'
                   }`}
                   rounded
                   style={{ backgroundColor: '#f59e0b' }}
