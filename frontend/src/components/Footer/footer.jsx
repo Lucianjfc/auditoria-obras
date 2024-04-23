@@ -11,7 +11,6 @@ export const Footer = () => (
         <div className="flex align-items-center gap-2">
           <div className="flex flex-column gap-0">
             <span className="text-sm">LSI</span>
-            <span className="text-xl font-bold">Banco de Preços de Obras</span>
           </div>
         </div>
         <span>© 2024 LSI</span>

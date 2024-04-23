@@ -12,6 +12,12 @@ services:
     networks:
       - sql_network
 
+  proxy-api:
+    container_name: proxy-api
+    image: lucianjfc/proxy-api
+    ports:
+      - "5001:5001"
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.2
     container_name: elasticsearch
@@ -37,6 +43,8 @@ networks:
   sql_network:
     driver: bridge
   elastic-network:
+    driver: bridge
+  proxy-api:
     driver: bridge
 
 volumes:
