@@ -61,12 +61,11 @@ class ItensObraListagem extends Component {
     });
 
     const sumProdutos = getSumFromRawData(produtos, 'valorComprado');
-
     produtos = produtos.map((p) => ({ ...p, percent: getPercent(p.valorComprado, sumProdutos) }));
 
-    produtos = this.calcularPercentualAcumulado(produtos);
+    produtos = produtos.slice().sort((a, b) => b.valorComprado - a.valorComprado);
 
-    produtos = produtos.slice().sort((a, b) => b.sobrePreco - a.sobrePreco);
+    produtos = this.calcularPercentualAcumulado(produtos);
 
     produtos = this.getClassificacaoByPercent(produtos);
 
@@ -78,10 +77,17 @@ class ItensObraListagem extends Component {
   }
 
   calcularPercentualAcumulado(array) {
-    let percent = 0;
-    return array.map((item) => {
-      percent += item.percent;
-      item['percentualAcumulado'] = percent;
+    let percentAcumulado = 0;
+
+    return array.map((item, index) => {
+      percentAcumulado += item.percent;
+      const percentAcumuladoArredondado = Math.round(percentAcumulado * 100) / 100; // Arredondando para duas casas decimais
+      item['percentualAcumulado'] = percentAcumuladoArredondado;
+
+      if (index === array.length - 1 && percentAcumuladoArredondado !== 100) {
+        item['percentualAcumulado'] += 100 - percentAcumuladoArredondado;
+      }
+
       return item;
     });
   }
@@ -106,7 +112,6 @@ class ItensObraListagem extends Component {
   }
 
   onSortChange(event) {
-    debugger;
     const value = event.value;
 
     if (value.indexOf('!') === 0) {

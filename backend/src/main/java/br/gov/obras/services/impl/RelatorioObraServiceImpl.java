@@ -126,7 +126,7 @@ public class RelatorioObraServiceImpl extends AbstractUploadTipoServiceImpl<Rela
     }
 
     private RelatorioObra gerarItensImportados(RelatorioObra relatorioObra) {
-        relatorioObra.setItensObra(new ArrayList<ItemObra>());
+        relatorioObra.setItensObra(new ArrayList<>());
         List<ArquivoRelatorioObraDTO> arquivos = this.recuperarArquivos(relatorioObra.getId());
         ArquivoBinarioDTO arquivoBinarioDTO = this.download(arquivos.get(0).getArquivo());
         byte[] binary = arquivoBinarioDTO.getBinario();
@@ -138,7 +138,9 @@ public class RelatorioObraServiceImpl extends AbstractUploadTipoServiceImpl<Rela
             Map<Integer, String> columnsPositions = validateHeader(rowHeader);
             for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
                 Row row = sheet.getRow(rowIndex);
-                if (row != null) {
+                String cellCodigo = row.getCell(0).getStringCellValue();
+                String cellDescricao = row.getCell(0).getStringCellValue();
+                if (row != null && cellCodigo != null && !cellCodigo.isEmpty() && cellDescricao != null && !cellDescricao.isEmpty()) {
                     ItemObra itemObraGerado = gerarItem(row, columnsPositions);
                     itemObraGerado.setRelatorioObra(relatorioObra);
                     relatorioObra.getItensObra().add(itemObraGerado);

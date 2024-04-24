@@ -39,10 +39,17 @@ class Abc extends React.Component {
   }
 
   calcularPercentualAcumulado(array) {
-    let percent = 0;
-    return array.map((item) => {
-      percent += item.percent;
-      item['percentualAcumulado'] = percent;
+    let percentAcumulado = 0;
+
+    return array.map((item, index) => {
+      percentAcumulado += item.percent;
+      const percentAcumuladoArredondado = Math.round(percentAcumulado * 100) / 100; // Arredondando para duas casas decimais
+      item['percentualAcumulado'] = percentAcumuladoArredondado;
+
+      if (index === array.length - 1 && percentAcumuladoArredondado !== 100) {
+        item['percentualAcumulado'] += 100 - percentAcumuladoArredondado;
+      }
+
       return item;
     });
   }
@@ -77,18 +84,18 @@ class Abc extends React.Component {
     itensMercado = itensMercado.map((item) => ({ ...item, percent: getPercent(item.valor, sumItensMercado) }));
     itensComprados = itensComprados.map((item) => ({ ...item, percent: getPercent(item.valor, sumItensComprados) }));
 
-    itensMercado = this.calcularPercentualAcumulado(itensMercado);
-    itensComprados = this.calcularPercentualAcumulado(itensComprados);
-
     const sortedItensMercado = itensMercado.slice().sort((a, b) => b.valor - a.valor);
     const sortedItensComprados = itensComprados.slice().sort((a, b) => b.valor - a.valor);
 
-    itensMercado = this.getClassificacaoByPercent(sortedItensMercado);
-    itensComprados = this.getClassificacaoByPercent(sortedItensComprados);
+    itensMercado = this.calcularPercentualAcumulado(sortedItensMercado);
+    itensComprados = this.calcularPercentualAcumulado(sortedItensComprados);
+
+    itensMercado = this.getClassificacaoByPercent(itensMercado);
+    itensComprados = this.getClassificacaoByPercent(itensComprados);
 
     this.setState({
-      dataItensMercado: sortedItensMercado,
-      dataItensComprados: sortedItensComprados,
+      dataItensMercado: itensMercado,
+      dataItensComprados: itensComprados,
       valorTotalItensMercado: sumItensMercado,
       valorTotalitensComprados: sumItensComprados,
     });
@@ -143,7 +150,6 @@ class Abc extends React.Component {
           type: 'value',
           name: 'Custo Total Unit',
           min: 0,
-          interval: 500,
           max: this.state.dataItensComprados[0]?.valor,
           axisLabel: {
             formatter: '{value} R$',

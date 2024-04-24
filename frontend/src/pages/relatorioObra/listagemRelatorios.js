@@ -15,6 +15,7 @@ import { InputText } from 'primereact/inputtext';
 import { DATE_FORMAT_WITH_HOURS, DATE_PARSE_FORMAT_WITH_HOURS } from '~/utils/date';
 import MultipleFileUploader from '~/components/MultipleFileUploader';
 import AppBreadCrumb from '~/components/AppBreadCrumb';
+import InputMonetary from '~/components/InputMonetary';
 
 @observer
 class ListagemRelatoriosIndexPage extends GenericIndexPage {
@@ -64,7 +65,7 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
       <Dialog
         header="Importa Relatório"
         visible={this.state.visibiliyDialogImport}
-        style={{ width: '50vw' }}
+        style={{ width: '70vw' }}
         onHide={() => this.setState({ visibiliyDialogImport: false })}
         footer={
           <div className="p-mt-2">
@@ -90,11 +91,25 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
         }
       >
         <div className="p-fluid p-formgrid p-grid">
+          <FormField columns={12} label="Autor">
+            <InputText
+              placeholder="Informe o seu nome"
+              value={this.store.newRelatorio.autor}
+              onChange={(e) => this.store.updateAttribute('autor', e)}
+            />
+          </FormField>
           <FormField columns={6} label="Título">
             <InputText
               placeholder="Digite o título do relatório"
               value={this.store.newRelatorio.titulo}
               onChange={(e) => this.store.updateAttribute('titulo', e)}
+            />
+          </FormField>
+          <FormField columns={6} label="Valor da Licitação">
+            <InputMonetary
+              onChange={(e) => this.store.updateAttribute('valorLicitacao', e)}
+              value={this.store.newRelatorio.valorLicitacao}
+              placeholder="Informe o valor da licitação"
             />
           </FormField>
           <div className="p-col-12">

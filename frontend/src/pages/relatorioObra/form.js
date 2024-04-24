@@ -37,14 +37,7 @@ class RelatorioObraFormPage extends GenericFormPage {
 
   componentDidMount() {
     const { id } = this.props;
-    this.store.initialize(
-      id,
-      {},
-      () => {
-        this.store.fileStore.initialize([]);
-      },
-      () => this.forceUpdate()
-    );
+    this.store.initialize(id, {});
   }
 
   handleOnChangeStep(step) {

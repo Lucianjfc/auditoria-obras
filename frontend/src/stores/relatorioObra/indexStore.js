@@ -79,8 +79,8 @@ class RelatorioObraIndexStore extends IndexBase {
     RelatorioObraService.importarRelatorioObra(relatorioObraDTO)
       .then(() =>
         runInAction(() => {
-          showNotification('success', null, 'Relatório importado com sucesso!');
           callback && callback();
+          showNotification('success', null, 'Relatório importado com sucesso!');
         })
       )
       .catch((error) =>

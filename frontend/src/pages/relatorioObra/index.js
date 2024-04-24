@@ -99,7 +99,6 @@ class RelatorioObraIndexPage extends GenericIndexPage {
   }
 
   onPage(event, filter) {
-    console.log(filter);
     const page = (event.page ?? 0) + 1;
     let pagination = {};
     if (filter === 'sinapi') {
@@ -160,7 +159,11 @@ class RelatorioObraIndexPage extends GenericIndexPage {
             {row?.caracteristicasNaoDesonerado?.length && (
               <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 <Tag
-                  value={`Unidade: ${row?.caracteristicasNaoDesonerado[0]?.unidadeMedida?.toUpperCase() ?? '-'}`}
+                  value={`Unidade: ${
+                    row?.caracteristicasNaoDesonerado[
+                      row?.caracteristicasNaoDesonerado?.length - 1
+                    ]?.unidadeMedida?.toUpperCase() ?? '-'
+                  }`}
                   rounded
                   style={{ backgroundColor: '#f59e0b' }}
                 />

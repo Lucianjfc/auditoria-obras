@@ -44,7 +44,7 @@ class RelatorioObraFormStore extends FormBase {
   }
 
   @override
-  initialize(id, defaultValues = {}, callback, callbackRefresh) {
+  initialize(id, defaultValues = {}, callback) {
     if (!id) {
       this.object = Object.assign({}, defaultValues);
     } else {
@@ -59,7 +59,7 @@ class RelatorioObraFormStore extends FormBase {
               i.referencia = i.referencia[i.fonte === 'sinapi' ? 'referenciaSinapi' : 'referenciaSicro'];
               return i;
             });
-            this.recuperarArquivos(this.object?.licitacao?.id, callbackRefresh);
+            //this.recuperarArquivos(this.object?.licitacao?.id, callbackRefresh);
 
             this.loadedObject = response.data;
             callback && callback();
@@ -80,25 +80,20 @@ class RelatorioObraFormStore extends FormBase {
 
   @override
   save(callback, type = 'edit') {
-    const saveObject = this.getObjectToSave(type);
-    if (Object.keys(saveObject).length === 0) {
-      showNotification('warn', null, 'Nenhuma alteração realizada.');
-    } else {
-      this.object.itensObra = this.itensObra;
-      this.loading = true;
-      this.service
-        .save(this.object, type, this.object.id)
-        .then(() => {
-          callback && callback();
-          showNotification('success', null, 'Registro salvo com sucesso!');
+    this.object.itensObra = this.itensObra;
+    this.loading = true;
+    this.service
+      .save(this.object, type, this.object.id)
+      .then(() => {
+        callback && callback();
+        showNotification('success', null, 'Registro salvo com sucesso!');
+      })
+      .catch((error) => showErrorNotification(error))
+      .finally(() =>
+        runInAction(() => {
+          this.loading = false;
         })
-        .catch((error) => showErrorNotification(error))
-        .finally(() =>
-          runInAction(() => {
-            this.loading = false;
-          })
-        );
-    }
+      );
   }
 
   @action

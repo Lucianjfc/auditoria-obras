@@ -7,7 +7,6 @@ export class ServiceBase {
 
   constructor(endpoint) {
     this.endpoint = endpoint;
-    console.log(window._env_);
   }
 
   get(options = {}) {

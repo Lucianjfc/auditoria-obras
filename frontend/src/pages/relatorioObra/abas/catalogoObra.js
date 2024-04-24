@@ -282,7 +282,6 @@ class CatalogoObra extends GenericIndexPage {
   }
 
   onPage(event, filter) {
-    console.log(filter);
     const page = (event.page ?? 0) + 1;
     let pagination = {};
     if (filter === 'sinapi') {

@@ -10,7 +10,7 @@ python-dotenv==1.0.0
 retrying
 bs4
 tqdm
-zipfile
+openpyxl
 Elasticsearch
 xlrd==2.0.1
 sentence_transformers

@@ -406,5 +406,6 @@ export const getAVGFromRawData = (data, propertyKey) => {
 };
 
 export const getPercent = (valor, total) => {
-  return (valor / total) * 100;
+  const percentual = (valor / total) * 100;
+  return Math.round(percentual * 100) / 100;
 };

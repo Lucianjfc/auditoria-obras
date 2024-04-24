@@ -12,11 +12,11 @@ services:
     networks:
       - sql_network
 
-  proxy-api:
-    container_name: proxy-api
-    image: lucianjfc/proxy-api
-    ports:
-      - "5001:5001"
+#  proxy-api:
+#    container_name: proxy-api
+#    image: lucianjfc/proxy-api
+#    ports:
+#      - "5000:5000"
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.2
