@@ -291,7 +291,7 @@ class ItensObraListagem extends Component {
           header={header}
           itemTemplate={this.itemTemplate}
           paginator
-          rows={5}
+          rows={3}
           sortOrder={this.state.sortOrder}
           sortField={this.state.sortField}
         />

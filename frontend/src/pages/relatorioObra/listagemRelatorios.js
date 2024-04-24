@@ -61,6 +61,8 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
       },
     ];
 
+    const { reloadTableData } = this.store;
+
     return (
       <Dialog
         header="Importa Relatório"
@@ -81,7 +83,9 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
                 label="Importar"
                 onClick={() =>
                   this.store.importarRelatorioObra(() => {
-                    this.setState({ visibiliyDialogImport: false });
+                    this.setState({ visibiliyDialogImport: false }, () => {
+                      reloadTableData();
+                    });
                   })
                 }
                 loading={this.store.loading}
@@ -165,6 +169,7 @@ class ListagemRelatoriosIndexPage extends GenericIndexPage {
               <FcButton
                 icon="pi pi-trash"
                 className="p-button-sm p-button-danger"
+                disabled
                 onClick={() => {
                   this.setState({ idRemove: rowData.id });
                   this.store.toggleShowConfirmDialog();
