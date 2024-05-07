@@ -53,7 +53,7 @@ sub_folders = {
     "desonerado": "Desonerado",
 }
 
-SINAPI_FILE_NAME = "SINAPI_Preco_Ref_Insumos_PB_"
+SINAPI_FILE_NAME = "SINAPI_Preco_Ref_Insumos_AC_"
 
 frames = []
 df_consolidado = pd.DataFrame()

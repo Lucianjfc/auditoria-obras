@@ -66,10 +66,10 @@ class LinkSinapi:
         self.mes = mes
         self.desonerado = desonerado
 
-url_desonerado = "https://www.caixa.gov.br/Downloads/sinapi-a-partir-jul-2009-pb/SINAPI_ref_Insumos_Composicoes_PB_data_Desonerado.zip"
-url_nao_desonerado = "https://www.caixa.gov.br/Downloads/sinapi-a-partir-jul-2009-pb/SINAPI_ref_Insumos_Composicoes_PB_data_NaoDesonerado.zip"
-url_desonerado_retificado = "https://www.caixa.gov.br/Downloads/sinapi-a-partir-jul-2009-pb/SINAPI_ref_Insumos_Composicoes_PB_data_Desonerado_Retificacao01.zip"
-url_nao_desonerado_retificado = "https://www.caixa.gov.br/Downloads/sinapi-a-partir-jul-2009-pb/SINAPI_ref_Insumos_Composicoes_PB_data_NaoDesonerado_Retificacao01.zip"
+url_desonerado = "https://www.caixa.gov.br/Downloads/sinapi-a-partir-jul-2009-ac/SINAPI_ref_Insumos_Composicoes_AC_data_Desonerado.zip"
+url_nao_desonerado = "https://www.caixa.gov.br/Downloads/sinapi-a-partir-jul-2009-ac/SINAPI_ref_Insumos_Composicoes_AC_data_NaoDesonerado.zip"
+url_desonerado_retificado = "https://www.caixa.gov.br/Downloads/sinapi-a-partir-jul-2009-ac/SINAPI_ref_Insumos_Composicoes_AC_data_Desonerado_Retificacao01.zip"
+url_nao_desonerado_retificado = "https://www.caixa.gov.br/Downloads/sinapi-a-partir-jul-2009-ac/SINAPI_ref_Insumos_Composicoes_AC_data_NaoDesonerado_Retificacao01.zip"
 
 links = []
 

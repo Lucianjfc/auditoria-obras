@@ -20,7 +20,7 @@ class LinkSicro:
         self.mes = mes
         self.mesTitle = mesTitle
 
-url = "https://www.gov.br/dnit/pt-br/assuntos/planejamento-e-pesquisa/custos-e-pagamentos/custos-e-pagamentos-dnit/sistemas-de-custos/sicro_antiga/nordeste"
+url = "https://www.gov.br/dnit/pt-br/assuntos/planejamento-e-pesquisa/custos-e-pagamentos/custos-e-pagamentos-dnit/sistemas-de-custos/sicro_antiga/norte"
 
 headers = {
         'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"}
@@ -37,7 +37,7 @@ if items:
         links = item.find_all('a', class_='internal-link')
         for link in links:
             link_href = link['href']
-            if 'paraiba' in link_href:
+            if 'acre' in link_href:
                 links_extraidos.append(link_href)
 else:
     print('Nenhum item encontrado.')

@@ -5,7 +5,7 @@ app: # App
       default: ${PAGINATION_LIMIT_DEFAULT:20}
       max: ${PAGINATION_LIMIT_MAX:100}
   files:
-    repository-full-path: /home/lucian/Documentos/lsi/tce
+    repository-full-path: /opt/repositorio/licon
     temp-folder-path: arquivos_uploads_temp
     definitive-folder-path: arquivos_uploads
     relatorio-obra-folder-path: relatorio-obra
@@ -16,9 +16,9 @@ app: # App
     admin:
       label: "ADMIN"
 server:
-  port: 8080
+  port: 8089
   servlet:
-    context-path: /obras-api
+    context-path: /sicro-sinapi-api
 spring:
   servlet:
     multipart:

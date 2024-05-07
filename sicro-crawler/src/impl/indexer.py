@@ -66,12 +66,12 @@ df_consolidado = pd.DataFrame()
 for month in months:
     # LENDO OS ARQUIVOS
 
-    file_composicoes_custos = SICRO_DIR + month + "/PB "+ formatDate(month) + " " + SICRO_FILE_NAME_COMPOSICOES_CUSTOS
-    file_composicoes_equipamentos = SICRO_DIR + month + "/PB "+ formatDate(month) + " " + SICRO_FILE_NAME_EQUIPAMENTOS
-    file_composicoes_equipamentos_desonerados = SICRO_DIR + month + "/PB "+ formatDate(month) + " " + SICRO_FILE_NAME_EQUIPAMENTOS_DESONERADOS
-    file_composicoes_materiais = SICRO_DIR + month + "/PB "+ formatDate(month) + " " + SICRO_FILE_NAME_MATERIAIS
-    file_composicoes_mao_obra = SICRO_DIR + month + "/PB "+ formatDate(month) + " " + SICRO_FILE_NAME_MAO_OBRA
-    file_composicoes_mao_obra_desonerados = SICRO_DIR + month + "/PB "+ formatDate(month) + " " + SICRO_FILE_NAME_MAO_OBRA_DESONERADOS
+    file_composicoes_custos = SICRO_DIR + month + "/AC "+ formatDate(month) + " " + SICRO_FILE_NAME_COMPOSICOES_CUSTOS
+    file_composicoes_equipamentos = SICRO_DIR + month + "/AC "+ formatDate(month) + " " + SICRO_FILE_NAME_EQUIPAMENTOS
+    file_composicoes_equipamentos_desonerados = SICRO_DIR + month + "/AC "+ formatDate(month) + " " + SICRO_FILE_NAME_EQUIPAMENTOS_DESONERADOS
+    file_composicoes_materiais = SICRO_DIR + month + "/AC "+ formatDate(month) + " " + SICRO_FILE_NAME_MATERIAIS
+    file_composicoes_mao_obra = SICRO_DIR + month + "/AC "+ formatDate(month) + " " + SICRO_FILE_NAME_MAO_OBRA
+    file_composicoes_mao_obra_desonerados = SICRO_DIR + month + "/AC "+ formatDate(month) + " " + SICRO_FILE_NAME_MAO_OBRA_DESONERADOS
 
     print(file_composicoes_custos)
     

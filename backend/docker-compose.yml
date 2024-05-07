@@ -18,34 +18,34 @@ services:
 #    ports:
 #      - "5000:5000"
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.2
-    container_name: elasticsearch
-    environment:
-      node.name: "es01"
-      cluster.name: "es-docker-cluster"
-      discovery.type: "single-node"
-      ELASTIC_PASSWORD: "elastic"
-      xpack.security.enabled: "true"
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    ports:
-      - "9200:9200"
-    volumes:
-      - elasticsearch-data-volume:/usr/share/elasticsearch/data
-    networks:
-      - elastic-network
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.2
+#    container_name: elasticsearch
+#    environment:
+#      node.name: "es01"
+#      cluster.name: "es-docker-cluster"
+#      discovery.type: "single-node"
+#      ELASTIC_PASSWORD: "elastic"
+#      xpack.security.enabled: "true"
+#      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    ports:
+#      - "9200:9200"
+#    volumes:
+#      - elasticsearch-data-volume:/usr/share/elasticsearch/data
+#    networks:
+#      - elastic-network
 
 networks:
   sql_network:
     driver: bridge
-  elastic-network:
-    driver: bridge
-  proxy-api:
-    driver: bridge
+#  elastic-network:
+#    driver: bridge
+#  proxy-api:
+#    driver: bridge
 
 volumes:
   elasticsearch-data-volume:
