@@ -12,7 +12,7 @@ INDEX_NAME_SINAPI = "sinapi_index"
 INDEX_NAME_SICRO = "sicro_index"
 
 model_all_mini = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-es = Elasticsearch(hosts="172.20.12.110:9200", basic_auth=("elastic", "mkYozxvG9TEhWd8"), verify_certs=False)
+es = Elasticsearch(hosts="https://172.20.12.110:9200", basic_auth=("elastic", "mkYozxvG9TEhWd8"), verify_certs=False)
 
 def get_source_by_index(index):
     sources = [
