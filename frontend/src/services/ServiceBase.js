@@ -2,7 +2,8 @@ import axios from 'axios';
 import { buildRequestParams, showNotification } from '../utils/utils';
 
 export class ServiceBase {
-  baseUrl = window._env_.REACT_APP_API_URL;
+  //baseUrl = window._env_.REACT_APP_API_URL;
+  baseUrl = 'https://licon2h.tceac.tc.br/sicro-sinapi-api/';
   endpoint;
 
   constructor(endpoint) {
