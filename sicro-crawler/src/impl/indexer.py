@@ -164,7 +164,7 @@ dataset_sicro['ALL_MINI_BASE_VECTOR'] = dataset_sicro['DESCRICAO'].apply(lambda 
 print(dataset_sicro.head())
 
 ELASTIC_PASSWORD = "elastic"
-es = Elasticsearch(hosts="https://172.20.12.110:9200", basic_auth=("elastic", "mkYozxvG9TEhWd8"), verify_certs=False)
+es = Elasticsearch(hosts="https://172.20.12.110:9200", basic_auth=("elastic", "mkYozxvG9TEhWd8"))
 
 body_sicro = {
     "settings":{

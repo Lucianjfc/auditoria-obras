@@ -125,7 +125,7 @@ model_all_mini = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 dataset_sinapi['ALL_MINI_BASE_VECTOR'] = dataset_sinapi['DESCRICAO'].apply(lambda x: model_all_mini.encode(x))
 
 ELASTIC_PASSWORD = "elastic"
-es = Elasticsearch(hosts="https://172.20.12.110:9200", basic_auth=("elastic", "mkYozxvG9TEhWd8"), verify_certs=False)
+es = Elasticsearch(hosts="https://172.20.12.110:9200", basic_auth=("elastic", "mkYozxvG9TEhWd8"))
 
 body_sinapi = {
     "settings":{
