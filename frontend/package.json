@@ -1,9 +1,9 @@
 {
   "name": "licon",
   "version": "1.0.0-SNAPSHOT",
-  "homepage": ".",
   "private": false,
   "license": "MIT",
+  "homepage": "https://licon2h.tceac.tc.br/sicro-sinapi",
   "dependencies": {
     "@ckeditor/ckeditor5-alignment": "^34.1.0",
     "@ckeditor/ckeditor5-build-classic": "^34.1.0",
