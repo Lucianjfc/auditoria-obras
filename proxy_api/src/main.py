@@ -69,6 +69,7 @@ def search_sinapi():
 
             vector_input = model_all_mini.encode(search_query)
             response = run_query(vector_input, INDEX_NAME_SINAPI, get_source_by_index(INDEX_NAME_SINAPI), page_index, page_size)
+            print(response)
             nova_lista_objetos = [criar_novo_objeto_sinapi(objeto) for objeto in response]
             return jsonify({"message": "Consulta recebida com sucesso", "response": nova_lista_objetos}), 200
         else:
