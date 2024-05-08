@@ -53,9 +53,9 @@ spring:
     serialization:
       write-dates-as-timestamps: false
   elasticsearch:
-    host: localhost:9200
+    host: http://172.20.12.110:9200/
     user: elastic
-    password: elastic
+    password: mkYozxvG9TEhWd8
   jpa:
     hibernate:
       ddl-auto: validate
