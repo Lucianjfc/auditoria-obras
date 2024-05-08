@@ -182,7 +182,7 @@ body_sinapi = {
                     "DESONERADO": {"type": "boolean"}
                 }
             },
-            "ALL_MINI_VECT": {
+            "ALL_MINI_BASE_VECTOR": {
                 "type": "dense_vector",
                 "dims": 384,
                 "index": True,
