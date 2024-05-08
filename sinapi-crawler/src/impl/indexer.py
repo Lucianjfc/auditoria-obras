@@ -96,8 +96,9 @@ for key, value in sub_folders.items():
         dataset_sinapi['CODIGO'] = dataset_sinapi['CODIGO'].apply(lambda x: f'{x:08d}' )
         #dataset_sinapi['UNIDADE_MEDIDA'] = dataset_sinapi['UNIDADE_MEDIDA'].apply(lambda x: x.upper())
         dataset_sinapi = dataset_sinapi.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-        dataset_sinapi['PRECO_MEDIANO'] = dataset_sinapi['PRECO_MEDIANO'].str.replace('[.,]', '', regex=True).str.replace(',', '.')
-        dataset_sinapi['PRECO_MEDIANO'] = dataset_sinapi['PRECO_MEDIANO'].astype(float)
+        # dataset_sinapi['PRECO_MEDIANO'] = dataset_sinapi['PRECO_MEDIANO'].str.replace('[.,]', '', regex=True).str.replace(',', '.')
+        dataset_sinapi['PRECO_MEDIANO'] = dataset_sinapi['PRECO_MEDIANO'].str.replace('.', '')
+        dataset_sinapi['PRECO_MEDIANO'] = dataset_sinapi['PRECO_MEDIANO'].str.replace(',', '.')
         dataset_sinapi['CARACTERISTICAS'] = dataset_sinapi.apply(lambda row: criar_caracteristicas(dataset_sinapi, row, month, key == 'desonerado'), axis=1)
         dataset_sinapi = dataset_sinapi[['CODIGO', 'DESCRICAO', 'CARACTERISTICAS']]
 
