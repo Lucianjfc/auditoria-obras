@@ -246,7 +246,7 @@ body_sicro = {
                     "PERICULOSIDADE_INSALUBRIDADE": {"type": "text"}
                 }
             },
-            "ALL_MINI_VECT": {
+            "ALL_MINI_BASE_VECTOR": {
                 "type": "dense_vector",
                 "dims": 384,
                 "index": True,
