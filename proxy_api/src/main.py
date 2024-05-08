@@ -27,7 +27,7 @@ def get_source_by_index(index):
 def run_query(vector_of_input, index_search, source, pageIndex, pageSize):
 
     query = {
-            "field" : "ALL_MINI_BASE_VECTOR",
+            "field" : "ALL_MINI_VECT",
             "query_vector": vector_of_input,
             "k": pageIndex * pageSize,
             "num_candidates": 500,
